@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ola.appathon.food.fragment.SettingsFragment">
+
+    <TextView
+        android:id="@+id/set_not_view"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:text="Enable Notification"
+        android:textSize="18sp"
+        android:gravity="left|center_vertical"
+        android:layout_marginLeft="16dp"
+        android:textColor="@color/black"/>
+
+    <CheckBox
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:id="@+id/set_not_check"
+        android:gravity="right|center_vertical"
+        android:layout_toRightOf="@+id/set_not_view"/>
+
+    <TextView
+        android:id="@+id/set_app_ver"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="App Version"
+        android:textSize="18sp"
+        android:gravity="left|center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@+id/set_not_view"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="32dp"
+        android:gravity="right|center_vertical"
+        android:text="Beta"
+        android:textSize="18sp"
+        android:layout_below="@+id/set_not_check"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@+id/set_app_ver"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginLeft="16dp"
+        android:gravity="left|center_vertical"
+        android:text="Logout"
+        android:textSize="18sp"
+        android:id="@+id/set_logout"
+        android:layout_below="@+id/set_app_ver"
+        android:textColor="@color/black"
+        />
+
+</RelativeLayout><!-- From: file:/E:/Studio-Space/Pikup/app/src/main/res/layout/fragment_settings.xml -->

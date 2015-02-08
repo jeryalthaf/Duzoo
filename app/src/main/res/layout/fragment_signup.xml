@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.ola.appathon.food.fragment.SignUpFragment">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@drawable/signupborder"
+        android:layout_centerInParent="true">
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:id="@+id/signup_name"
+            android:imeOptions="actionNext"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+
+            android:maxLines="1"
+            android:hint="Enter NGO name">
+
+            <requestFocus></requestFocus>
+        </EditText>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:id="@+id/signup_mail"
+            android:layout_below="@+id/signup_name"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="Email" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:inputType="textPassword"
+            android:layout_below="@+id/signup_mail"
+            android:id="@+id/signup_pass"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="Enter password" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:inputType="phone"
+            android:layout_below="@+id/signup_pass"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:maxLines="1"
+            android:id="@+id/signup_phone"
+            android:imeOptions="actionDone"
+            android:hint="Mobile number" />
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_centerInParent="true"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:text="Sign Up"
+            android:id="@+id/signup"
+            android:layout_below="@+id/signup_phone"
+            android:gravity="center"
+            android:background="@drawable/rounded_bg_blue"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

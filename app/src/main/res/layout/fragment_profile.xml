@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.ola.appathon.food.fragment.ProfileFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/set_name_view"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_margin="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="left|center_vertical"
+        android:textSize="20sp"
+        android:textColor="@color/app_color"
+        android:text="Name" />
+
+    <EditText
+        android:id="@+id/set_name_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_margin="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:gravity="right|center_vertical"
+        android:textSize="20sp"
+        android:textColor="@color/app_color"
+        android:hint="Enter name" />
+
+    <TextView
+        android:id="@+id/set_mail_view"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_margin="16dp"
+        android:layout_below="@+id/set_name_view"
+        android:layout_alignParentLeft="true"
+        android:gravity="left|center_vertical"
+        android:textSize="20sp"
+        android:textColor="@color/app_color"
+        android:text="Email" />
+
+    <EditText
+        android:id="@+id/set_mail_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_margin="14dp"
+        android:layout_below="@+id/set_name_edit"
+        android:layout_alignParentRight="true"
+        android:gravity="right|center_vertical"
+        android:textSize="20sp"
+        android:textColor="@color/app_color"
+        android:hint="email" />
+
+    <TextView
+        android:id="@+id/set_phone_view"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_margin="16dp"
+        android:layout_below="@+id/set_mail_view"
+        android:layout_alignParentLeft="true"
+        android:gravity="left|center_vertical"
+        android:textSize="20sp"
+        android:textColor="@color/app_color"
+        android:text="Phone" />
+
+    <EditText
+        android:id="@+id/set_phone_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_margin="14dp"
+        android:layout_below="@+id/set_mail_edit"
+        android:layout_alignParentRight="true"
+        android:gravity="right|center_vertical"
+        android:textSize="20sp"
+        android:textColor="@color/app_color"
+        android:hint="License number" />
+
+    <Button
+        android:id="@+id/set_update"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/set_phone_edit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+
+        android:text="Update"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/rounded_bg_blue"
+        android:textSize="20sp" />
+</RelativeLayout>

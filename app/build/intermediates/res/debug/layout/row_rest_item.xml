@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_height="70dp">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/rest_logo"
+        android:src="@drawable/kfc">
+
+    </ImageView>
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:gravity="left|bottom"
+        android:layout_marginLeft="16dp"
+        android:textColor="@color/app_color"
+        android:id="@+id/rest_name"
+        android:text="KFC (16km)"
+        android:layout_toRightOf="@+id/rest_logo"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:gravity="top"
+        android:layout_marginLeft="16dp"
+        android:id="@+id/rest_menu"
+        android:layout_toRightOf="@+id/rest_logo"
+        android:layout_below="@+id/rest_name"
+        android:textColor="@color/grey"
+        android:text="3  buckets , 7 burgers and more .."
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:layout_marginRight="8dp"
+        android:id="@+id/rest_dist"
+        android:layout_toRightOf="@+id/rest_name"
+        android:textColor="@color/app_color"
+        android:text="14km"
+        android:textSize="14sp" />
+
+</RelativeLayout><!-- From: file:/E:/Studio-Space/Pikup/app/src/main/res/layout/row_rest_item.xml -->
