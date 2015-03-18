@@ -11,7 +11,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Parse.initialize(this, "rw2MviOVGpAsFE5i92XdXcb7LzgrmOkYF7hMpyNu",
-                "9YA8NdBPHdyedZQj0QE0F1crfvycylscdg85I41f");
+        Parse.initialize(this, "ZfpnlBPzb2WAG0fSzFrQfZanIviSCjvXxBqOS0ks",
+                "FA4o93AAe6bLmeHXlNn5W6vLRqJ5g5FTxFDTz74A");
     }
 }

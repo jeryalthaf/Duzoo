@@ -1,8 +1,6 @@
-
 package com.ola.appathon.food.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +11,22 @@ import android.widget.TextView;
 import com.ola.appathon.food.R;
 
 /**
- * Created by RRaju on 2/3/2015.
+ * Created by viz on 3/14/2015.
  */
-public class DrawerListAdapter extends BaseAdapter {
-    String[] name = { "Home", "Interests", "Profile", "Settings" };
-    Context  mContext;
-    int[] icons ={R.drawable.home,R.drawable.interests,R.drawable.profile,R.drawable.settings};
+public class CommentListAdapter extends BaseAdapter{
+    String[] name,content;
+    Context mContext;
 
-    public DrawerListAdapter(Context mContext) {
+    public CommentListAdapter(String[] name,String[] content,Context mContext) {
+        this.name = name;
+        this.content = content;
         this.mContext = mContext;
     }
 
+
+
     @Override
+
     public int getCount() {
         return name.length;
     }
@@ -46,16 +48,16 @@ public class DrawerListAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
             list = new View(mContext);
-            list = inflater.inflate(R.layout.row_drawer_layout, null);
-            TextView title = (TextView) list.findViewById(R.id.drawer_item);
-            ImageView icon = (ImageView) list.findViewById(R.id.drawer_icon);
-
-            icon.setImageResource(icons[position]);
-            title.setText(name[position]);
+            list = inflater.inflate(R.layout.row_comment_list_item, null);
+            TextView mName = (TextView) list.findViewById(R.id.home_comment_name);
+            TextView mMenu = (TextView) list.findViewById(R.id.home_comment_content);
+            ImageView resIcon = (ImageView) list.findViewById(R.id.home_comment_image);
+            mName.setText(name[position]);
+            mMenu.setText(content[position]);
+            resIcon.setVisibility(View.GONE);
 
         } else {
             list = (View) convertView;
         }
-        return list;
-    }
+        return list;    }
 }

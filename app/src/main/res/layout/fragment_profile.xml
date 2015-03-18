@@ -89,6 +89,6 @@
         android:text="Update"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:background="@drawable/rounded_bg_blue"
+        android:background="@drawable/rounded_bg_green"
         android:textSize="20sp" />
 </RelativeLayout>

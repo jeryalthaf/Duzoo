@@ -1,20 +1,15 @@
 
 package com.ola.appathon.food.fragment;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,40 +17,25 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ola.appathon.food.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
-public class SignUpFragment extends Fragment implements
-        LocationListener
-{
+public class SignUpFragment extends Fragment {
     static Context mContext;
     EditText                mName, mPass, mPhone, mEmail;
     TextView                mSignUp;
-    String                  name, pass, phone, mail, lat="0", lon="0";
-    LocationManager locationManager;
-    String provider;
-
+    String                  name, pass, phone, mail;
+    static android.support.v7.app.ActionBar actionBar;
     // TODO: Rename and change types and number of parameters
-    public static SignUpFragment newInstance(Context context) {
+    public static SignUpFragment newInstance(Context context, android.support.v7.app.ActionBar actionBar) {
         SignUpFragment fragment = new SignUpFragment();
         mContext = context;
+        SignUpFragment.actionBar = actionBar;
         return fragment;
     }
 
@@ -65,6 +45,7 @@ public class SignUpFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        actionBar.setTitle("Signup");
     }
 
 
@@ -128,7 +109,6 @@ public class SignUpFragment extends Fragment implements
             }
         });
 
-        initLocation();
         mSignUp.setClickable(true);
         mSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,27 +122,6 @@ public class SignUpFragment extends Fragment implements
         });
     }
 
-    private void initLocation() {
-        locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-
-        Criteria criteria = new Criteria();
-
-        provider = LocationManager.NETWORK_PROVIDER;
-
-        if (provider != null && !provider.equals("")) {
-
-            // Get the location from the given provider
-            Location location = locationManager.getLastKnownLocation(provider);
-            if (location != null)
-                onLocationChanged(location);
-          //  else
-          //      Toast.makeText(getActivity(), "Location can't be retrieved", Toast.LENGTH_SHORT)
-          //              .show();
-
-        } else {
-         //   Toast.makeText(getActivity(), "No Provider Found", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void signUpUser() {
         ProgressDialog pd = new ProgressDialog(getActivity());
@@ -172,29 +131,24 @@ public class SignUpFragment extends Fragment implements
         user.setUsername(phone);
         user.setPassword(pass);
         user.put("email", mail);
-        user.put("type", "N");
-        user.put("lat",lat);
-        user.put("lon", lon);
+        user.put("name",name);
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
 
             }
         });
-        new SignUpAtOla().execute();
+
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).edit();
         editor.putBoolean("isSignedUp",true);
         editor.putString("user", phone);
         editor.putString("pass", pass);
         editor.putString("phone", phone);
-        editor.putString("lat",lat);
-        editor.putString("lon",lon);
         editor.putString("mail",mail);
         editor.putString("name",name);
         editor.commit();
-        Fragment fragment = HomeFragment.newInstance();
+        Fragment fragment = InterestsFragment.newInstance(actionBar);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
-      //  getActivity().setTitle("Recent Giveaways");
         pd.cancel();
     }
 
@@ -209,69 +163,7 @@ public class SignUpFragment extends Fragment implements
         super.onDetach();
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        lat = new String(location.getLatitude() + "");
-        lon = new String(location.getLongitude() + "");
-    }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
 
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    public class SignUpAtOla extends AsyncTask<String, Void, String>
-    {
-
-        @Override
-        protected String doInBackground(String... params)
-        {
-            StringBuilder builder = new StringBuilder();
-            HttpClient client = new DefaultHttpClient();
-            String url = "http://mobile.api.foo.com/v1/user/signup";
-            HttpPost httpPost = new HttpPost(url);
-            httpPost.addHeader("email", mail);
-            httpPost.addHeader("password", pass);
-            httpPost.addHeader("name", name);
-            httpPost.addHeader("mobile", phone);
-            httpPost.addHeader("source", "and-app");
-            try {
-                HttpResponse response = client.execute(httpPost);
-                StatusLine statusLine = response.getStatusLine();
-                int statusCode = statusLine.getStatusCode();
-                if (statusCode == 200) {
-                    HttpEntity entity = response.getEntity();
-                    InputStream content = entity.getContent();
-                    BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(content));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        builder.append(line);
-                    }
-                } else {
-                }
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return "success";
-        }
-
-        protected void onPostExecute(String page)
-        {
-
-        }
-    }
 
 }

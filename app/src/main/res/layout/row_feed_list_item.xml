@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_margin="16dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="8dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/arvi"
+        android:id="@+id/home_post_image"/>
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:gravity="left|bottom"
+        android:layout_toRightOf="@+id/home_post_image"
+        android:id="@+id/home_post_name"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:text="To Sanjeevani via "/>
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:gravity="left|top"
+        android:layout_toRightOf="@+id/home_post_image"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@+id/home_post_name"
+        android:id="@+id/home_post_content"
+        android:textColor="@color/grey"
+        android:textSize="14sp"
+        android:text="Burgers, fries and coke "/>
+
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:src="@drawable/like"
+        android:layout_alignBottom="@+id/home_post_count"
+        android:layout_toLeftOf="@+id/home_downvote"
+        android:id="@+id/home_upvote"/>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:layout_alignBottom="@+id/home_post_count"
+        android:src="@drawable/dislike"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/home_downvote"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="-"
+        android:gravity="center"
+        android:textColor="@color/grey"
+        android:layout_below="@id/home_post_content"
+        android:id="@+id/home_post_count"/>
+</RelativeLayout>

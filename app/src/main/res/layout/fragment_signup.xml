@@ -14,20 +14,19 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="60dp"
+            android:inputType="text"
             android:id="@+id/signup_name"
             android:imeOptions="actionNext"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-
             android:maxLines="1"
-            android:hint="Enter NGO name">
-
-            <requestFocus></requestFocus>
+            android:hint="Your name">
         </EditText>
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="60dp"
+            android:inputType="text"
             android:id="@+id/signup_mail"
             android:layout_below="@+id/signup_name"
             android:imeOptions="actionNext"
@@ -69,7 +68,7 @@
             android:id="@+id/signup"
             android:layout_below="@+id/signup_phone"
             android:gravity="center"
-            android:background="@drawable/rounded_bg_blue"
+            android:background="@drawable/rounded_bg_green"
             android:textColor="@color/white"
             android:textSize="24sp" />
     </RelativeLayout>

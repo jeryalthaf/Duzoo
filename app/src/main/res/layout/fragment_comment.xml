@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    tools:context="com.ola.appathon.food.fragment.CommentFragment">
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="480dp"
+        android:layout_margin="2dp"
+        android:divider="#eee"
+        android:dividerHeight="2dp"
+        android:listSelector="@color/app_color" />
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No comments"
+        android:textColor="@color/app_color"
+        android:textSize="24sp"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:id="@+id/add_comment_layout"
+        android:layout_below="@+id/list">
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/add_comment_box"
+            android:layout_alignParentLeft="true"
+            android:textSize="16sp"
+            android:textColor="@color/grey"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/add_comment_submit"
+            android:layout_alignParentRight="true"
+            android:text="Submit"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textColor="@color/green"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

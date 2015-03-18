@@ -24,6 +24,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
     compile files('libs/google-play-services.jar')
+    compile files('libs/picasso-2.5.0.jar')
 //    compile 'com.parse.bolts:bolts-android:1.+'
 
 
