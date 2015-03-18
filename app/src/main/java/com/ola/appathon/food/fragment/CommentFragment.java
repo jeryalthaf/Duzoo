@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ola.appathon.food.R;
 import com.ola.appathon.food.adapter.CommentListAdapter;
@@ -33,7 +35,7 @@ public class CommentFragment extends Fragment {
     TextView       empty;
     String[]       content, userId, objectId, userName;
     EditText       new_comment_content;
-    TextView       new_comment_add;
+    ImageView       new_comment_add;
 
     public static CommentFragment newInstance(String _postId) {
         CommentFragment fragment = new CommentFragment();
@@ -99,7 +101,7 @@ public class CommentFragment extends Fragment {
         mListView.setEmptyView(empty);
         empty = (TextView) view.findViewById(R.id.empty);
         new_comment_content = (EditText) view.findViewById(R.id.add_comment_box);
-        new_comment_add = (TextView) view.findViewById(R.id.add_comment_submit);
+        new_comment_add = (ImageView) view.findViewById(R.id.add_comment_submit);
         new_comment_add.setClickable(true);
         new_comment_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,10 +111,12 @@ public class CommentFragment extends Fragment {
                 comment.put("postId", postId);
                 comment.put("userId", ParseUser.getCurrentUser().getObjectId());
                 comment.put("userName", ParseUser.getCurrentUser().get("name"));
+                new_comment_content.setText("");
                 try {
                     comment.save();
                 } catch (ParseException e) {
                     e.printStackTrace();
+                    Toast.makeText(getActivity(),"Comment not saved",Toast.LENGTH_SHORT).show();
                 }
             }
         });

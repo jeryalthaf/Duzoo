@@ -4,6 +4,7 @@
     <color name="register_bg">#27D2ED</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="light_black">#555</color>
     <color name="transparent">#00000000</color>
     <color name="grey">#bbbbbb</color>
     <color name="explore_bg_bottom">#D1E2E5</color>

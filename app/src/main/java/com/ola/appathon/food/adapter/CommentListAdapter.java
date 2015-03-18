@@ -51,11 +51,8 @@ public class CommentListAdapter extends BaseAdapter{
             list = inflater.inflate(R.layout.row_comment_list_item, null);
             TextView mName = (TextView) list.findViewById(R.id.home_comment_name);
             TextView mMenu = (TextView) list.findViewById(R.id.home_comment_content);
-            ImageView resIcon = (ImageView) list.findViewById(R.id.home_comment_image);
             mName.setText(name[position]);
             mMenu.setText(content[position]);
-            resIcon.setVisibility(View.GONE);
-
         } else {
             list = (View) convertView;
         }

@@ -1,17 +1,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#eee"
+    android:layout_width="fill_parent"
+    android:background="@color/grey"
+    android:layout_height="fill_parent"
     tools:context="com.ola.appathon.food.fragment.CommentFragment">
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="480dp"
-        android:layout_margin="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:divider="#eee"
-        android:dividerHeight="2dp"
+        tools:listitem="@layout/row_comment_list_item"
+        android:dividerHeight="8dp"
         android:listSelector="@color/app_color" />
 
     <TextView
@@ -19,34 +21,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="No comments"
+        android:text="Be the first to comment on this post"
         android:textColor="@color/app_color"
         android:textSize="24sp"
         android:visibility="gone" />
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="120dp"
-        android:id="@+id/add_comment_layout"
-        android:layout_below="@+id/list">
+        android:layout_width="360dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="60dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/border_add_comment"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/add_comment_layout">
 
         <EditText
-            android:layout_width="300dp"
+            android:layout_width="350dp"
             android:layout_height="fill_parent"
             android:id="@+id/add_comment_box"
+            android:layout_margin="8dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
+            android:hint="Add a comment"
             android:textSize="16sp"
-            android:textColor="@color/grey"/>
+            android:textColor="@color/black" />
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="fill_parent"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:id="@+id/add_comment_submit"
             android:layout_alignParentRight="true"
-            android:text="Submit"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:textColor="@color/green"/>
+            android:src="@android:drawable/ic_menu_add" />
 
     </RelativeLayout>
 
