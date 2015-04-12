@@ -1,8 +1,0 @@
-E:\Studio-Space\Pikup\app\build\intermediates\classes\debug
-E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-d3fd93425f1877ec794910120f13068e293850fb.jar
-E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\bolts-android-1.1.4-cabd9469cddc00a4a0ced9d6db2fcec57749d45c.jar
-E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-f53e435fb852a88fc94f480a13d2ffe091a03f39.jar
-E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-25e3e9d6887c14ef67a2ffa3a4f9f961ff79059a.jar
-E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\Parse-1.8.2-d7eb26fef11d26d2459ee279ff25802760a89883.jar
-E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-165d6a2d2e126d408eb9f0768072ee07618a8c5e.jar
-E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\google-play-services-a197ab3f6a0dddfa9db5094866b28787c3943c9a.jar

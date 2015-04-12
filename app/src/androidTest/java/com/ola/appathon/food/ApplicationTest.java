@@ -1,4 +1,4 @@
-package com.ola.appathon.food;
+package com.duzoo.android;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

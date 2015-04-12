@@ -1,76 +1,37 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
     android:background="@color/white"
-    tools:context="com.ola.appathon.food.fragment.SignUpFragment">
+    tools:context="com.duzoo.android.fragment.SignUpFragment">
 
-    <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:background="@drawable/signupborder"
-        android:layout_centerInParent="true">
+    <TextView
+        android:layout_height="60dp"
+        android:layout_weight="5"
+        android:layout_width="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:text="DUZOO"
+        android:gravity="center"
+        android:textColor="@color/app_color"
+        android:textSize="48sp" />
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:inputType="text"
-            android:id="@+id/signup_name"
-            android:imeOptions="actionNext"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:maxLines="1"
-            android:hint="Your name">
-        </EditText>
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        />
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:inputType="text"
-            android:id="@+id/signup_mail"
-            android:layout_below="@+id/signup_name"
-            android:imeOptions="actionNext"
-            android:maxLines="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:hint="Email" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:inputType="textPassword"
-            android:layout_below="@+id/signup_mail"
-            android:id="@+id/signup_pass"
-            android:imeOptions="actionNext"
-            android:maxLines="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:hint="Enter password" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:inputType="phone"
-            android:layout_below="@+id/signup_pass"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:maxLines="1"
-            android:id="@+id/signup_phone"
-            android:imeOptions="actionDone"
-            android:hint="Mobile number" />
-
-        <TextView
-            android:layout_width="150dp"
-            android:layout_centerInParent="true"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:text="Sign Up"
-            android:id="@+id/signup"
-            android:layout_below="@+id/signup_phone"
-            android:gravity="center"
-            android:background="@drawable/rounded_bg_green"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
-    </RelativeLayout>
-
-</RelativeLayout>
+    <TextView
+        android:layout_height="60dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="2"
+        android:layout_gravity="center"
+        android:text="Or\nSkip for now"
+        android:id="@+id/skip"
+        android:gravity="center"
+        android:textColor="@color/app_color"
+        android:textSize="16sp" />
+</LinearLayout>

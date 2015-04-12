@@ -1,20 +1,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:background="@color/grey"
+    android:background="@color/white"
     android:layout_height="fill_parent"
-    tools:context="com.ola.appathon.food.fragment.CommentFragment">
+    tools:context="com.duzoo.android.fragment.CommentFragment">
+
+    <include
+        android:id="@+id/comment_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/list"
+        layout="@layout/row_feed_list_item" />
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:divider="#eee"
-        tools:listitem="@layout/row_comment_list_item"
-        android:dividerHeight="8dp"
-        android:listSelector="@color/app_color" />
+        android:divider="@null"
+        android:dividerHeight="2dp"
+        android:padding="0dip"
+        android:stackFromBottom="true"
+        android:layout_above="@+id/add_comment_layout"
+        android:transcriptMode="alwaysScroll" />
+
+    <RelativeLayout
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_above="@+id/add_comment_layout" />
 
     <TextView
         android:id="@+id/empty"
@@ -30,7 +44,7 @@
         android:layout_width="360dp"
         android:layout_centerHorizontal="true"
         android:layout_height="60dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="2dp"
         android:background="@drawable/border_add_comment"
         android:layout_alignParentBottom="true"
         android:id="@+id/add_comment_layout">
@@ -52,7 +66,7 @@
             android:layout_centerVertical="true"
             android:id="@+id/add_comment_submit"
             android:layout_alignParentRight="true"
-            android:src="@android:drawable/ic_menu_add" />
+            android:src="@android:drawable/ic_menu_send" />
 
     </RelativeLayout>
 

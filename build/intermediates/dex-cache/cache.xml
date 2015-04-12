@@ -2,6 +2,146 @@
 <items version="2" >
 
     <item
+        jar="E:\softwares\adt-bundle-windows-x86_64-20140702\adt-bundle-windows-x86_64-20140702\sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-3c915537746394c24ea890ab6a832bdfd1030b43.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a08d65794b844d8e7540bf9a33859bf3b2482d7f">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-0f713564425b7f30988579b9b04f6d916c9ff5b3.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="41b3870cbe5fa546d8095b5b89d42cb69f3dd175">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-449bab8151bb9fccae660f394eac0630f98c2451.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e3d791b42eaa90416cd0b2d2e608092794a3baa4">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-90a3a539cda9e40c86db4b5f16a2b031ab1e4d2e.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appstate\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7ff613bf78ab057293892fdbd4169eda899c89b9">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-9973263414d2bfc25dae8e369d89a37d8be46317.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="9224bc4c54ba95147c7eabd874573763c07cb6be">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-60bc55f8cd19e61a0870f4ad3af42f6e4bf3318b.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="3c0b099f9de16b265ecd6122fcb603e7d0d29f90">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-277f9b4722780a9cc688d34514c45beb4a131988.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4c93d99d454c975536bbe3b42283eee847f03ea3">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-31f344e4f5944cd557524c31aaecfe6f14b4d105.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="29fd6d3794b71491c2789708cd8d03c71feb8954">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-4d285b55317a7216207ba6f1fa2f84d21057606c.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="fb04b12526b0073c7fb1ebb70c5842d82ee95596">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-b018102f33860a3345bb372e03c2b45a88ed28a3.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\libs\ParseFacebookUtilsV3-1.9.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e28994e5ee675a752eabf9f89323789a43c96d1a">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\ParseFacebookUtilsV3-1.9.0-fb13113869dd1cd58b52248a3bd17b417f732923.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0f254ec13d6671680482d2218f01ecf14dfa93e6">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-4fe507d77a1e739a2ed9e3b1f3ff1eb2de02eca6.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0e8228b4bc69c6a2c8d7c18498a77e53417d2574">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-805396100d595fe5b4e166be2f8ccccecc6a23a0.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-740039987e887372b41755e1af05b75fb3df55fb.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-6433279aa5324eeef6e93c634d005c2bcd101374.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="17f8750d5c0749e44dd7c54aa390d9c937803825">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-830005ab606e9268cd33a10956af4c8bf1bed341.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ef5f051e7308febe289dc93c67c5f32785b4260a">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-439a936c69ba3aedae4446e1cf51a12fb79a841a.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\libs\Parse-1.9.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="5811138d4e6cb9d45030e133ef1a61b935154c3a">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\Parse-1.9.0-e265b48d038467faa0f98a8ff108b32835193a53.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a96b762bde4139de855735f175ec4d17dca55a6d">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-a64149fa22136b2835802b12d8accc3bf7ee7680.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1c5a76debf0c2857ccad422c4a80ed785982f8df">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-71dd4e8cef50a82bbfded9c1f6cb53ab6f76bff4.jar" />
+    </item>
+    <item
         jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -9,46 +149,53 @@
         <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-25e3e9d6887c14ef67a2ffa3a4f9f961ff79059a.jar" />
     </item>
     <item
-        jar="E:\Studio-Space\Pikup\app\libs\google-play-services.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="9b63d9aba531aa7ff5dd30e0c872e8ca550b363a">
-        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\google-play-services-a197ab3f6a0dddfa9db5094866b28787c3943c9a.jar" />
-    </item>
-    <item
-        jar="E:\Studio-Space\Pikup\app\libs\Parse-1.8.2.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="c2cb0bfe37cbefd855b6faa3c9a5be833aba7300">
-        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\Parse-1.8.2-d7eb26fef11d26d2459ee279ff25802760a89883.jar" />
-    </item>
-    <item
-        jar="E:\softwares\adt-bundle-windows-x86_64-20140702\adt-bundle-windows-x86_64-20140702\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-d3fd93425f1877ec794910120f13068e293850fb.jar" />
-    </item>
-    <item
-        jar="E:\Studio-Space\Pikup\app\libs\bolts-android-1.1.4.jar"
+        jar="C:\Users\Rraju\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.1.4\129874135e6081269ace2312092031558865de12\bolts-android-1.1.4.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="129874135e6081269ace2312092031558865de12">
-        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\bolts-android-1.1.4-cabd9469cddc00a4a0ced9d6db2fcec57749d45c.jar" />
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\bolts-android-1.1.4-9038b2de5b49182769ecc8b29dde9ecf5ca8db14.jar" />
     </item>
     <item
-        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\7.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-165d6a2d2e126d408eb9f0768072ee07618a8c5e.jar" />
+        sha1="3033cc3a2c68dff3e5b646d6d084bdbdf7d00b25">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-fe9ed4e8ce7a0d6bfe436d880ce8973d0e850398.jar" />
     </item>
     <item
-        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-f53e435fb852a88fc94f480a13d2ffe091a03f39.jar" />
+        sha1="c976518693e89ad44fbfccfc654941eaec198d08">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-a1cb326cea49ecaef0b3228d72b40ef3402ac925.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="73ccb92b70112f2e463e415ef8d7275de7da6516">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-464681d624defa9ac05473ad491935065488337a.jar" />
+    </item>
+    <item
+        jar="C:\Users\Rraju\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\picasso-2.5.2-5c80d6bdb4c7a0afd1975a87f05f0a2f547faa91.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="055783146ba9654a725442563be78cad303aad1f">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-aeffd42a91291173bad917b20f6d9e275f840cfc.jar" />
+    </item>
+    <item
+        jar="E:\Studio-Space\Pikup\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\7.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4cd0b093824b3228fffc21ea369b98d0b1db6566">
+        <dex dex="E:\Studio-Space\Pikup\app\build\intermediates\pre-dexed\debug\classes-738e84b9a1e554b1435c6617038082a15fba8537.jar" />
     </item>
 
 </items>
