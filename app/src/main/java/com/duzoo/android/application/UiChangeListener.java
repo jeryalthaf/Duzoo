@@ -9,8 +9,8 @@ import com.duzoo.android.activity.DuzooActivity;
  */
 public interface UiChangeListener {
 
-    public void onAppStateChange(DuzooActivity.State state, Bundle bundle);
+    public void onAppStateChange(DuzooActivity.state state, Bundle bundle);
 
-    public void onToolbarStateChanged(DuzooActivity.State state, Bundle bundle);
+    public void onToolbarStateChanged(DuzooActivity.state state, Bundle bundle);
 
 }

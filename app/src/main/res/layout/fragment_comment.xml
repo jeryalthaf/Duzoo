@@ -9,16 +9,16 @@
         android:id="@+id/comment_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/list"
+        android:layout_alignParentTop="true"
         layout="@layout/row_feed_list_item" />
 
     <ListView
         android:id="@+id/list"
-        android:layout_alignParentTop="true"
         android:layout_width="fill_parent"
+        android:layout_below="@+id/comment_post"
         android:layout_height="wrap_content"
         android:divider="@null"
-        android:dividerHeight="2dp"
+        android:dividerHeight="8dp"
         android:padding="0dip"
         android:stackFromBottom="true"
         android:layout_above="@+id/add_comment_layout"

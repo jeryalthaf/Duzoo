@@ -59,8 +59,14 @@ public class ParseLink {
                     int upVotes = post.getInt("upvotes");
                     int downVotes = post.getInt("downvotes");
                     String userName = new String(post.getString("userName"));
+                    String userImage = new String(post.getString("userImage"));
                     String createdAt = post.getCreatedAt().toString();
-                    db.createPost(userName, objectId, content, createdAt, upVotes, downVotes);
+                    Post existingPost = db.getPost(objectId);
+                    if (existingPost == null)
+                        db.createPost(userName, objectId, content, createdAt, upVotes, downVotes,
+                                userImage);
+                    else
+                        db.updatePost(objectId, upVotes, downVotes);
                 }
             }
         });
@@ -80,7 +86,9 @@ public class ParseLink {
                             if (e == null)
                                 Toast.makeText(mContext, "Post upvoted", Toast.LENGTH_SHORT).show();
                             else
-                                Toast.makeText(mContext, "Error when upvoting the post, Please try again", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext,
+                                        "Error when upvoting the post, Please try again",
+                                        Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -90,9 +98,12 @@ public class ParseLink {
                         @Override
                         public void done(ParseException e) {
                             if (e == null)
-                                Toast.makeText(mContext, "Post downvoted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "Post downvoted", Toast.LENGTH_SHORT)
+                                        .show();
                             else
-                                Toast.makeText(mContext, "Error when downvoting the post, Please try again", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext,
+                                        "Error when downvoting the post, Please try again",
+                                        Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -100,7 +111,7 @@ public class ParseLink {
         });
     }
 
-    public static void createUserOnParse(String name,String id,String url) {
+    public static void createUserOnParse(String name, String id, String url) {
 
         ParseUser user = new ParseUser();
         user.put("name", name);
@@ -110,17 +121,18 @@ public class ParseLink {
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
-                if(e==null)
-                    Toast.makeText(mContext,"Parse user created",Toast.LENGTH_SHORT).show();
+                if (e == null)
+                    Toast.makeText(mContext, "Parse user created", Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(mContext,"Parse user creation failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Parse user creation failed", Toast.LENGTH_SHORT)
+                            .show();
             }
         });
         DuzooPreferenceManager.putKey("username", id);
         DuzooPreferenceManager.putKey("password", id);
         DuzooPreferenceManager.putKey("name", name);
         DuzooPreferenceManager.putKey("image", url);
-        DuzooPreferenceManager.putKey("signed_up",true);
+        DuzooPreferenceManager.putKey("signed_up", true);
 
     }
 

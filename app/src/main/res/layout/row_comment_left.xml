@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_alignParentLeft="true"
+    android:layout_margin="16dp"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left|top"
+        android:gravity="left|center_vertical"
         android:maxWidth="300dp"
-        android:background="@drawable/grey_bubble"
         android:layout_marginLeft="12dp"
-        android:layout_marginBottom="20dp"
+        android:id="@+id/home_comment_name"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:maxWidth="300dp"
+        android:layout_below="@+id/home_comment_name"
+        android:layout_marginLeft="12dp"
         android:id="@+id/home_comment_content"
         android:textColor="@color/light_black"
         android:textSize="14sp"

@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:layout_alignParentLeft="true"
-        android:src="@drawable/manu"/>
+        android:src="@drawable/user"/>
 
     <TextView
         android:layout_width="200dp"

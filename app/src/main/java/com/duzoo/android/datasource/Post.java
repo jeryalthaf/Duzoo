@@ -4,9 +4,17 @@ package com.duzoo.android.datasource;
  * Created by RRaju on 3/27/2015.
  */
 public class Post {
-    String id,name,content,createdAt;
+    String id,name,content,createdAt,userImage;
     int upvotes,downvotes;
     int vote;
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
 
     public int getVote() {
         return vote;
