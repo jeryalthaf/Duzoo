@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="register_bg">#27D2ED</color>
     <color name="white">#ffffff</color>
+    <color name="off_white">#f0fff0</color>
     <color name="black">#000000</color>
-    <color name="light_black">#555</color>
+    <color name="light_black">#888</color>
     <color name="transparent">#00000000</color>
-    <color name="grey">#bbbbbb</color>
-    <color name="explore_bg_bottom">#D1E2E5</color>
-    <color name="app_color">#5bc5a7</color>
+    <color name="grey">#eeeeee</color>
+    <color name="app_color">#009688</color>
     <color name="green">#00aa00</color>
     <color name="list_divider">#d9d9d9</color>
     <color name="list_row_start_color">#ffffff</color>
     <color name="list_row_end_color">#ffffff</color>
     <color name="list_row_hover_start_color">#ebeef0</color>
     <color name="list_row_hover_end_color">#ebeef0</color>
+
+    <!-- colors for message names -->
+    <color name="name_red">#e51c23</color>
+    <color name="name_orange">#ff9800</color>
+    <color name="name_green">#259b24</color>
+    <color name="name_brown">#A52A2A</color>
+    <color name="name_coral">#FF7F50</color>
+    <color name="name_cyan">#00FFFF</color>
+    <color name="name_dodger_blue">#1E90FF</color>
+    <color name="name_gold">#FFD700</color>
+    <color name="name_lawn_green">#7CFC00</color>
 
 </resources>

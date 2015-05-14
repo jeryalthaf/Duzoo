@@ -18,6 +18,10 @@ public class DuzooPreferenceManager {
         PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit().putInt(key,value).commit();
     }
 
+    public static void putKey(String key,Long value) {
+        PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit().putLong(key,value).commit();
+    }
+
     public static void putKey(String key,Boolean value) {
         PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit().putBoolean(key,value).commit();
     }
@@ -32,5 +36,9 @@ public class DuzooPreferenceManager {
 
     public static int getIntKey(String key) {
         return PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).getInt(key,0);
+    }
+
+    public static long getLongKey(String key) {
+        return PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).getLong(key,0);
     }
 }

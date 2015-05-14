@@ -3,32 +3,33 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     tools:context="com.duzoo.android.fragment.FeedFragment">
 
     <ListView
         android:id="@+id/list"
-        android:dividerHeight="1dp"
+        android:dividerHeight="4dp"
         android:background="@color/white"
-        android:divider="#eee"
-        android:listSelector="@color/app_color"
+        android:divider="@color/grey"
+        android:descendantFocusability="blocksDescendants"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/empty"
-        android:text="No recent giveaways"
+        android:text="No recent posts"
         android:visibility="gone"
         android:textColor="@color/app_color"
         android:textSize="24sp"
         android:layout_centerInParent="true"/>
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
+    <com.melnykov.fab.FloatingActionButton
         android:id="@+id/new_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_add"
+        android:src="@drawable/ic_action_edit"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         fab:fab_colorNormal="@color/app_color"

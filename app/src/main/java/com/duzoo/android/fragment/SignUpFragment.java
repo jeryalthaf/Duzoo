@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.duzoo.android.R;
 import com.duzoo.android.Task.GetUserInfo;
@@ -29,6 +31,8 @@ public class SignUpFragment extends Fragment {
     LoginButton      loginButton;
     CallbackManager  callbackManager;
     String           accessToken;
+    EditText         code;
+    TextView         submit;
 
     public static SignUpFragment newInstance() {
         SignUpFragment fragment = new SignUpFragment();
@@ -67,7 +71,29 @@ public class SignUpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         loginButton = (LoginButton) view.findViewById(R.id.login_button);
+        code = (EditText) view.findViewById(R.id.invite_code);
+        submit = (TextView) view.findViewById(R.id.submit_code);
 
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (code.getText().toString().contentEquals("1404")) {
+                    Toast.makeText(getActivity(),"Validation successful",Toast.LENGTH_SHORT).show();
+                    code.setVisibility(View.GONE);
+                    submit.setVisibility(View.GONE);
+                    code.setEnabled(false);
+                    submit.setEnabled(false);
+                    loginButton.setVisibility(View.VISIBLE);
+                    loginButton.setEnabled(true);
+                }
+                else
+                    Toast.makeText(getActivity(),"Sorry, the code is invalid",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        loginButton.setVisibility(View.GONE);
+        loginButton.setEnabled(false);
         loginButton.setFragment(SignUpFragment.this);
         callbackManager = CallbackManager.Factory.create();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {

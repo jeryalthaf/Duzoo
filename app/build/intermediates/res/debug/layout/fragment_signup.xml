@@ -2,76 +2,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white"
-    tools:context="com.ola.appathon.food.fragment.SignUpFragment">
+    tools:context="com.duzoo.android.fragment.SignUpFragment">
 
-    <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:background="@drawable/signupborder"
-        android:layout_centerInParent="true">
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_launcher"
+        android:id="@+id/signuptext"
+        android:textColor="@color/app_color"
+        android:textSize="48sp" />
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:id="@+id/signup_name"
-            android:imeOptions="actionNext"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        />
 
-            android:maxLines="1"
-            android:hint="Enter NGO name">
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter 4 digit invite code"
+        android:layout_centerInParent="true"
+        android:inputType="number"
+        android:gravity="center"
+        android:id="@+id/invite_code"/>
 
-            <requestFocus></requestFocus>
-        </EditText>
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:id="@+id/signup_mail"
-            android:layout_below="@+id/signup_name"
-            android:imeOptions="actionNext"
-            android:maxLines="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:hint="Email" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:inputType="textPassword"
-            android:layout_below="@+id/signup_mail"
-            android:id="@+id/signup_pass"
-            android:imeOptions="actionNext"
-            android:maxLines="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:hint="Enter password" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:inputType="phone"
-            android:layout_below="@+id/signup_pass"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:maxLines="1"
-            android:id="@+id/signup_phone"
-            android:imeOptions="actionDone"
-            android:hint="Mobile number" />
-
-        <TextView
-            android:layout_width="150dp"
-            android:layout_centerInParent="true"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:text="Sign Up"
-            android:id="@+id/signup"
-            android:layout_below="@+id/signup_phone"
-            android:gravity="center"
-            android:background="@drawable/rounded_bg_blue"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
-    </RelativeLayout>
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/invite_code"
+        android:text="Submit"
+        android:gravity="center"
+        android:id="@+id/submit_code"
+        android:textSize="36sp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/rounded_bg_green"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout><!-- From: file:/E:/Studio-Space/Pikup/app/src/main/res/layout/fragment_signup.xml -->

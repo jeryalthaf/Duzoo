@@ -24,17 +24,17 @@ import java.io.InputStreamReader;
 /**
  * Created by RRaju on 4/7/2015.
  */
-public class GetUserInfo extends AsyncTask<String,Void,String> {
+public class GetUserInfo extends AsyncTask<String, Void, String> {
 
     Context mContext;
-    String id;
+
     public GetUserInfo(Context context) {
         mContext = context;
     }
 
     @Override
     protected String doInBackground(String... params) {
-        String url = "https://graph.facebook.com/v2.3/me?fields=name,picture&access_token="+ AccessToken.getCurrentAccessToken().getToken();
+        String url = "https://graph.facebook.com/v2.3/me?fields=name,picture&access_token=" + AccessToken.getCurrentAccessToken().getToken();
         InputStream content = null;
         try {
             HttpClient httpclient = new DefaultHttpClient();
@@ -52,10 +52,7 @@ public class GetUserInfo extends AsyncTask<String,Void,String> {
         String line = "";
         StringBuilder total = new StringBuilder();
 
-        // Wrap a BufferedReader around the InputStream
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-
-        // Read response until the end
         try {
             while ((line = rd.readLine()) != null) {
                 total.append(line);
@@ -77,10 +74,10 @@ public class GetUserInfo extends AsyncTask<String,Void,String> {
             String url = new String(user.getJSONObject("picture").getJSONObject("data").getString("url"));
             DataSource db = new DataSource(mContext);
             db.open();
-            User _user = db.createUser(name,id,url);
+            User _user = db.createUser(name, id, url);
             db.close();
-            if(_user!=null) {
-                ParseLink.createUserOnParse(name,id,url);
+            if (_user != null) {
+                ParseLink.createUserOnParse(name, id, url);
             }
         } catch (JSONException e) {
             e.printStackTrace();

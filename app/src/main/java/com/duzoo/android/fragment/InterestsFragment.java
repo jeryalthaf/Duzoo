@@ -17,13 +17,18 @@ import com.duzoo.android.activity.DuzooActivity;
 import com.duzoo.android.adapter.InterestListAdapter;
 import com.duzoo.android.application.DuzooPreferenceManager;
 import com.duzoo.android.application.UiChangeListener;
+import com.duzoo.android.datasource.DataSource;
+import com.duzoo.android.datasource.Interest;
+import com.duzoo.android.datasource.ParseLink;
+import com.duzoo.android.util.DuzooConstants;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import java.util.List;
+
 public class InterestsFragment extends Fragment {
 
-    private ListView         mListView;
-    TextView                 empty, interestAdd;
+    private ListView mListView;
     private UiChangeListener mUIChangeListener;
 
     public static InterestsFragment newInstance() {
@@ -39,19 +44,15 @@ public class InterestsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void saveInterestsOnParse() {
-
-        ParseUser user = ParseUser.getCurrentUser();
-        if (user == null) {
-            String username = DuzooPreferenceManager.getKey("username");
-            String password = DuzooPreferenceManager.getKey("password");
-            try {
-                user = ParseUser.logIn(username, password);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        try {
+            mListView = null;
+            mUIChangeListener = null;
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
         }
-
     }
 
     @Override
@@ -69,7 +70,7 @@ public class InterestsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_interest_list, container, false);
         return view;
     }
@@ -79,15 +80,14 @@ public class InterestsFragment extends Fragment {
     final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ParseLink.getMessages();
         mListView = (ListView) view.findViewById(R.id.list);
-        empty = (TextView) view.findViewById(R.id.empty);
-        // interestAdd = (TextView) view.findViewById(R.id.interest_add);
-        // interestAdd.setClickable(true);
-        // interestAdd.setOnClickListener(new View.OnClickListener() {
-        /*
-         * @Override public void onClick(View v) { saveInterestsOnParse(); } });
-         */
         setUpList();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
     }
 
     private void setUpList() {
@@ -97,22 +97,11 @@ public class InterestsFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*CheckBox c = (CheckBox) view.findViewById(R.id.interest_checked);
-                c.toggle();
-                if (c.isChecked()) {
-                    c.setVisibility(View.VISIBLE);
-                    ticked[position] = true;
-                }
-                else {
-                    c.setVisibility(View.GONE);
-                    ticked[position] = false;
-                }*/
-                DuzooPreferenceManager.putKey("interest_type",position);
-                mUIChangeListener.onAppStateChange(DuzooActivity.state.Home,null);
+                DuzooPreferenceManager.putKey(DuzooConstants.KEY_INTEREST_TYPE, position);
+                mUIChangeListener.onAppStateChange(DuzooActivity.state.Home, null);
 
             }
         });
-        mListView.setEmptyView(empty);
     }
 
     @Override

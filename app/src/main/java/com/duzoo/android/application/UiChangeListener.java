@@ -1,6 +1,7 @@
 package com.duzoo.android.application;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.duzoo.android.activity.DuzooActivity;
 
@@ -11,6 +12,5 @@ public interface UiChangeListener {
 
     public void onAppStateChange(DuzooActivity.state state, Bundle bundle);
 
-    public void onToolbarStateChanged(DuzooActivity.state state, Bundle bundle);
-
+    public boolean onCreateOptionsMenu(Menu menu);
 }

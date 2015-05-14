@@ -1,7 +1,6 @@
 package com.duzoo.android.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 import com.duzoo.android.R;
 import com.duzoo.android.datasource.DataSource;
 import com.duzoo.android.datasource.Interest;
-import com.duzoo.android.util.ImageUtil;
+import com.duzoo.android.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +30,7 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
         context = ctx;
         DataSource db = new DataSource(context);
         db.open();
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         interests = db.getAllInterests();
     }
 
@@ -44,7 +44,6 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
     }
     public View getCustomView(int position, View convertView,
                               ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View mySpinner = inflater.inflate(R.layout.spinner_rows, parent,
                 false);
         TextView name = (TextView) mySpinner
@@ -53,7 +52,7 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
 
         ImageView left_icon = (ImageView) mySpinner
                 .findViewById(R.id.new_post_image);
-        left_icon.setImageBitmap(ImageUtil.convertStringToBitmap(interests.get(position).getImage()));
+        left_icon.setImageBitmap(Util.convertStringToBitmap(interests.get(position).getImage()));
 
         return mySpinner;
     }

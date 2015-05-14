@@ -9,28 +9,33 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.duzoo.android.R;
+import com.duzoo.android.datasource.Comment;
+
+import java.util.List;
 
 /**
  * Created by viz on 3/14/2015.
  */
 public class CommentListAdapter extends BaseAdapter {
-    String[] name, content;
     Context  mContext;
+    List<Comment> comments;
+    LayoutInflater mInflater;
+    public CommentListAdapter(List<Comment> comments, Context mContext) {
 
-    public CommentListAdapter(String[] name, String[] content, Context mContext) {
-        this.name = name;
-        this.content = content;
         this.mContext = mContext;
+        this.comments = comments;
+        mInflater = (LayoutInflater) mContext
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return name.length;
+        return comments.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return content[position];
+        return comments.get(position);
     }
 
     @Override
@@ -40,21 +45,17 @@ public class CommentListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View list;
-        LayoutInflater inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (convertView == null) {
-            list = new View(mContext);
-            list = inflater.inflate(R.layout.row_comment_left, null);
 
-        } else {
-            list = (View) convertView;
+        if (convertView == null) {
+            convertView = new View(mContext);
+            convertView = mInflater.inflate(R.layout.row_comment, null);
+
         }
 
-        TextView mName = (TextView) list.findViewById(R.id.home_comment_name);
-        TextView mView = (TextView) list.findViewById(R.id.home_comment_content);
-        mName.setText(name[position]);
-        mView.setText(content[position]);
-        return list;
+        TextView mName = (TextView) convertView.findViewById(R.id.home_comment_name);
+        TextView mView = (TextView) convertView.findViewById(R.id.home_comment_content);
+        mName.setText(comments.get(position).getName());
+        mView.setText(comments.get(position).getContent());
+        return convertView;
     }
 }

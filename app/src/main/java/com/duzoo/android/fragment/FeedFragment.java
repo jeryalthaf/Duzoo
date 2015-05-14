@@ -2,6 +2,7 @@ package com.duzoo.android.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,8 +16,14 @@ import com.duzoo.android.R;
 import com.duzoo.android.activity.DuzooActivity;
 import com.duzoo.android.adapter.FeedListAdapter;
 import com.duzoo.android.application.DuzooPreferenceManager;
+import com.duzoo.android.application.UIController;
 import com.duzoo.android.application.UiChangeListener;
-import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.duzoo.android.datasource.DataSource;
+import com.duzoo.android.datasource.Post;
+import com.duzoo.android.util.DuzooConstants;
+import com.melnykov.fab.FloatingActionButton;
+
+import java.util.List;
 
 /**
  * Created by RRaju on 3/15/2015.
@@ -25,7 +32,6 @@ public class FeedFragment extends Fragment {
 
     ListView mListView;
     TextView empty;
-    UiChangeListener mUIChangeListener;
     FloatingActionButton fab;
 
     public FeedFragment() {
@@ -34,7 +40,13 @@ public class FeedFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        fab.setVisibility(View.GONE);
+        try {
+            fab.setVisibility(View.GONE);
+            mListView = null;
+            empty = null;
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -44,14 +56,16 @@ public class FeedFragment extends Fragment {
         empty = (TextView) view.findViewById(R.id.empty);
         setUpList();
         fab = (FloatingActionButton) view.findViewById(R.id.new_post);
-        if(fab.getVisibility()!=View.VISIBLE)
+        if (fab.getVisibility() != View.VISIBLE)
             fab.setVisibility(View.VISIBLE);
+        fab.attachToListView(mListView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mUIChangeListener.onAppStateChange(DuzooActivity.state.NewPost,null);
+                UIController.getInstance().switchToNewPostFragment();
             }
         });
+
     }
 
     @Override
@@ -70,31 +84,27 @@ public class FeedFragment extends Fragment {
         return feedFragment;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Activity activity = getActivity();
-
-        if (activity instanceof UiChangeListener) {
-            mUIChangeListener = (UiChangeListener) activity;
-        } else {
-            throw new IllegalArgumentException(
-                    "Calling activity should implement ChatUIChangeListener");
-        }
-    }
-
-
     private void setUpList() {
-        final FeedListAdapter adapter = new FeedListAdapter(getActivity());
-        mListView.setAdapter(adapter);
-        mListView.setEmptyView(empty);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        new Handler().post(new Runnable() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String _id = adapter.getId(position);
-                DuzooPreferenceManager.putKey("post_id", _id);
-                mUIChangeListener.onAppStateChange(DuzooActivity.state.Comments, null);
+            public void run() {
+                DataSource db = new DataSource(getActivity());
+                db.open();
+                List<Post> posts = db.getAllPosts(DuzooPreferenceManager.getIntKey(DuzooConstants.KEY_INTEREST_TYPE));
+
+                final FeedListAdapter adapter = new FeedListAdapter(getActivity(), posts);
+                mListView.setAdapter(adapter);
+                mListView.setEmptyView(empty);
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String _id = adapter.getId(position);
+                        DuzooPreferenceManager.putKey(DuzooConstants.KEY_POST_ID, _id);
+                        UIController.getInstance().switchToCommentsFragment();
+                    }
+                });
             }
+
         });
 
     }
@@ -108,7 +118,6 @@ public class FeedFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
 
 
 }

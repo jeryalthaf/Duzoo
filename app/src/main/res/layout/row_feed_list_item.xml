@@ -3,67 +3,93 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:background="@color/white"
-    android:layout_margin="16dp"
+    android:padding="8dp"
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="8dp"
-        android:layout_centerVertical="true"
-        android:id="@+id/home_post_image"/>
+        android:layout_margin="8dp"
+        android:src="@drawable/user"
+        android:id="@+id/home_post_image" />
 
     <TextView
-        android:layout_width="300dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="16dp"
-        android:gravity="left|bottom"
+        android:gravity="left|center_vertical"
         android:layout_toRightOf="@+id/home_post_image"
         android:id="@+id/home_post_name"
+        android:textColor="@color/light_black"
+        android:textSize="17sp"
+        android:text="Name" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/up_active"
+        android:layout_marginLeft="8dp"
+        android:layout_below="@+id/home_post_image"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/home_upvote" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:src="@drawable/down_active"
+        android:layout_below="@+id/home_upvote"
+        android:id="@+id/home_downvote" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="34"
+        android:layout_alignTop="@+id/home_post_name"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:layout_alignParentRight="true"
         android:textColor="@color/black"
-        android:textSize="16sp"
-        android:text="To Sanjeevani via "/>
+        android:id="@+id/home_post_count" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="left|top"
-        android:layout_toRightOf="@+id/home_post_image"
-        android:layout_marginLeft="16dp"
-        android:layout_below="@+id/home_post_name"
         android:id="@+id/home_post_content"
-        android:textColor="@color/grey"
-        android:textSize="14sp"
-        android:text="Burgers, fries and coke "/>
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:text="Content si the sasjk ssa dsadas dasdas  dsadas asdas asdas sadas asda sadas dasdas asdsa asdasdas sdads dsaa sdas"
+        android:maxLines="4"
+        android:paddingRight="16dp"
+        android:layout_below="@+id/home_post_name"
+        android:layout_alignLeft="@+id/home_post_name"
+        android:layout_alignStart="@+id/home_post_name" />
 
-    <ImageView
-        android:layout_marginTop="10dp"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:src="@drawable/like"
-        android:layout_alignBottom="@+id/home_post_count"
-        android:layout_toLeftOf="@+id/home_downvote"
-        android:id="@+id/home_upvote"/>
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:layout_alignBottom="@+id/home_post_count"
-        android:src="@drawable/dislike"
-        android:layout_marginRight="8dp"
-        android:layout_alignParentRight="true"
-        android:id="@+id/home_downvote"/>
     <TextView
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="16dp"
         android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        android:text="34 comments"
+        android:id="@+id/home_comment_count"
+        android:layout_alignLeft="@+id/home_post_name"
+        android:layout_alignStart="@+id/home_post_name"
+        android:layout_below="@id/home_downvote"/>
+
+    <ImageView
+        android:layout_width="40dp"
         android:layout_height="40dp"
-        android:text="-"
-        android:gravity="center"
-        android:textColor="@color/grey"
-        android:layout_below="@id/home_post_content"
-        android:id="@+id/home_post_count"/>
+        android:padding="6dp"
+        android:layout_margin="6dp"
+        android:layout_below="@+id/home_downvote"
+        android:id="@+id/home_share_whatsapp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/whatsapp"/>
+
+
+
+
 </RelativeLayout>
