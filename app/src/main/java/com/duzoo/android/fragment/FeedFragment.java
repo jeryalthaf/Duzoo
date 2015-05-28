@@ -1,8 +1,8 @@
 package com.duzoo.android.fragment;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,15 +13,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.duzoo.android.R;
-import com.duzoo.android.activity.DuzooActivity;
 import com.duzoo.android.adapter.FeedListAdapter;
 import com.duzoo.android.application.DuzooPreferenceManager;
 import com.duzoo.android.application.UIController;
-import com.duzoo.android.application.UiChangeListener;
-import com.duzoo.android.datasource.DataSource;
-import com.duzoo.android.datasource.Post;
 import com.duzoo.android.util.DuzooConstants;
 import com.melnykov.fab.FloatingActionButton;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.List;
 
@@ -33,6 +33,8 @@ public class FeedFragment extends Fragment {
     ListView mListView;
     TextView empty;
     FloatingActionButton fab;
+    FeedListAdapter mAdapter;
+    public static boolean isFavorite = false;
 
     public FeedFragment() {
     }
@@ -54,6 +56,10 @@ public class FeedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mListView = (ListView) view.findViewById(R.id.list);
         empty = (TextView) view.findViewById(R.id.empty);
+        if (isFavorite)
+            empty.setText("No starred posts");
+        else
+            empty.setText("No recent posts");
         setUpList();
         fab = (FloatingActionButton) view.findViewById(R.id.new_post);
         if (fab.getVisibility() != View.VISIBLE)
@@ -79,34 +85,29 @@ public class FeedFragment extends Fragment {
         return view;
     }
 
-    public static FeedFragment newInstance() {
+    public static FeedFragment newInstance(Boolean isFav) {
         FeedFragment feedFragment = new FeedFragment();
+        isFavorite = isFav;
         return feedFragment;
     }
 
     private void setUpList() {
-        new Handler().post(new Runnable() {
+
+        ParseQuery query = ParseQuery.getQuery("Post").orderByDescending(DuzooConstants.PARSE_POST_TIMESTAMP).setLimit(40);
+        if (isFavorite)
+            query.whereEqualTo(DuzooConstants.PARSE_POST_FAVORITE, true);
+        query.whereEqualTo(DuzooConstants.PARSE_POST_DELETED,false);
+        query.fromLocalDatastore();
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void run() {
-                DataSource db = new DataSource(getActivity());
-                db.open();
-                List<Post> posts = db.getAllPosts(DuzooPreferenceManager.getIntKey(DuzooConstants.KEY_INTEREST_TYPE));
-
-                final FeedListAdapter adapter = new FeedListAdapter(getActivity(), posts);
-                mListView.setAdapter(adapter);
-                mListView.setEmptyView(empty);
-                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String _id = adapter.getId(position);
-                        DuzooPreferenceManager.putKey(DuzooConstants.KEY_POST_ID, _id);
-                        UIController.getInstance().switchToCommentsFragment();
-                    }
-                });
+            public void done(List<ParseObject> list, ParseException e) {
+                if (list.size() != 0) {
+                    mAdapter = new FeedListAdapter(list,getActivity());
+                    mListView.setAdapter(mAdapter);
+                    mListView.setEmptyView(empty);
+                }
             }
-
         });
-
     }
 
     @Override

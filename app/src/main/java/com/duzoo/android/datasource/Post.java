@@ -1,71 +1,38 @@
 
 package com.duzoo.android.datasource;
 
+import com.duzoo.android.util.DuzooConstants;
+import com.parse.ParseObject;
+
 /**
  * Created by RRaju on 3/27/2015.
  */
+
 public class Post {
-    String id, name, content, userImage;
-    int    upvotes, downvotes;
-    int    vote;
-    boolean hasMedia;
+    String id;
+    int vote;
+    boolean isFavorite, isDeleted;
 
-    public String getImageUrl() {
-        return imageUrl;
+    public Post() {
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public Post(ParseObject parseObject) {
+
+        id = parseObject.getObjectId();
+        vote = parseObject.getInt(DuzooConstants.PARSE_POST_MY_VOTE);
+        isFavorite = parseObject.getBoolean(DuzooConstants.PARSE_POST_FAVORITE);
+        isDeleted = parseObject.getBoolean(DuzooConstants.PARSE_POST_DELETED);
     }
 
-    public boolean isHasMedia() {
-        return hasMedia;
+    public boolean isDeleted() {
+        return isDeleted;
     }
 
-    public void setHasMedia(int hasMedia) {
-        if(hasMedia==1)
-            this.hasMedia=true;
+    public void setIsDeleted(int isDeleted) {
+        if (isDeleted == 1)
+            this.isDeleted = true;
         else
-            this.hasMedia=false;
-    }
-
-    String imageUrl;
-
-    public int getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    int commentCount;
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    int type;
-    Double timestamp;
-
-    public String getUserImage() {
-        return userImage;
-    }
-
-    public void setUserImage(String userImage) {
-        this.userImage = userImage;
-    }
-
-    public int getVote() {
-        return vote;
-    }
-
-    public void setVote(int vote) {
-        this.vote = vote;
+            this.isDeleted = false;
     }
 
     public String getId() {
@@ -76,43 +43,22 @@ public class Post {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getVote() {
+        return vote;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setVote(int vote) {
+        this.vote = vote;
     }
 
-    public String getContent() {
-        return content;
+    public boolean isFavorite() {
+        return isFavorite;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Double getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Double timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public int getUpvotes() {
-        return upvotes;
-    }
-
-    public void setUpvotes(int upvotes) {
-        this.upvotes = upvotes;
-    }
-
-    public int getDownvotes() {
-        return downvotes;
-    }
-
-    public void setDownvotes(int downvotes) {
-        this.downvotes = downvotes;
+    public void setIsFavorite(int isFavorite) {
+        if (isFavorite == 1)
+            this.isFavorite = true;
+        else
+            this.isFavorite = false;
     }
 }

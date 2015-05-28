@@ -20,7 +20,7 @@
     <color name="accent_material_light">@color/material_deep_teal_500</color>
     <!-- From: file:/E:/Studio-Space/Pikup/app/src/main/res/values/colors.xml -->
     <eat-comment/>
-    <color name="app_color">#009688</color>
+    <color name="app_color">#f24e4e</color>
     <!-- From: file:/E:/Studio-Space/Pikup/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="background_floating_material_dark">#ff424242</color>
@@ -29,6 +29,7 @@
     <color name="background_material_light">#ffeeeeee</color>
     <!-- From: file:/E:/Studio-Space/Pikup/app/src/main/res/values/colors.xml -->
     <eat-comment/>
+    <color name="bg">#d9d9d9</color>
     <color name="black">#000000</color>
     <!-- From: file:/E:/Studio-Space/Pikup/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
@@ -40,11 +41,6 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/E:/Studio-Space/Pikup/app/build/intermediates/exploded-aar/net.steamcrafted/load-toast/1.0.5/res/values/values.xml -->
-    <eat-comment/>
-    <color name="color_accent">#7c4dff</color>
-    <color name="color_error">#f44336</color>
-    <color name="color_success">#3CCD88</color>
     <!-- From: file:/E:/Studio-Space/Pikup/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/res/values/values.xml -->
     <eat-comment/>
     <color name="com_facebook_blue">#3B5998</color>
@@ -321,9 +317,10 @@
     <string name="accept">Accept</string>
     <!-- From: file:/E:/Studio-Space/Pikup/app/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="action_gallery">Gallery</string>
+    <string name="action_gallery">IMAGE</string>
+    <string name="action_invite">INVITE</string>
     <string name="action_refresh">Refresh</string>
-    <string name="app_name">Criczoo</string>
+    <string name="app_name">Duzoo</string>
     <!-- From: file:/E:/Studio-Space/Pikup/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/res/values/values.xml -->
     <eat-comment/>
     <string name="com_facebook_image_download_unknown_error">Unexpected error while downloading an image.</string>
@@ -405,6 +402,9 @@ available. Please contact the developer for assistance.</string>
     <eat-comment/>
     <string name="store_picture_message">"Allow Ad to store image in Picture gallery?"</string>
     <string name="store_picture_title">Save image</string>
+    <!-- From: file:/E:/Studio-Space/Pikup/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="united">Man Utd</string>
     <!-- From: file:/E:/Studio-Space/Pikup/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/res/values/wallet_strings.xml -->
     <eat-comment/>
     <string name="wallet_buy_button_place_holder" translation_description="Text on a button that allows a user to make a payment with Google Wallet [CHAR LIMIT=30]">Buy with Google</string>
@@ -1252,17 +1252,9 @@ available. Please contact the developer for assistance.</string>
     </style>
     <style name="MyActionBarTabText" parent="@style/Widget.AppCompat.ActionBar.TabText">
         <item name="android:textColor">@color/white</item>
-        <!-- <item name="android:textStyle">bold</item>
-
-                 <item name="android:textAllCaps">true</item>
-         -->
     </style>
     <style name="MyActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/white</item>
-        <!-- <item name="android:textStyle">bold</item>
-
-                <item name="android:textAllCaps">true</item>
-        -->
     </style>
     <!-- From: file:/E:/Studio-Space/Pikup/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>

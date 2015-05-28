@@ -67,6 +67,7 @@ public class DuzooActivity extends ActionBarActivity implements UiChangeListener
     private void initDb() {
         ParseLink.getPosts();
         ParseLink.getComments();
+        ParseLink.getMessages();
     }
 
     public static boolean isNetworkAvailable() {
@@ -82,9 +83,6 @@ public class DuzooActivity extends ActionBarActivity implements UiChangeListener
         int id = item.getItemId();
         if (id == android.R.id.home)
             onBackPressed();
-        else if (id == R.id.action_refresh)
-            updateParse();
-        else return false;
         return true;
     }
 
@@ -106,4 +104,5 @@ public class DuzooActivity extends ActionBarActivity implements UiChangeListener
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
     }
+
 }

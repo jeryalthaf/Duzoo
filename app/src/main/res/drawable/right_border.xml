@@ -10,6 +10,6 @@
         android:right="1.5dp"
         android:top="1.5dp" />
 
-    <solid android:color="@color/grey" />
+    <solid android:color="@color/white" />
 
 </shape>

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Criczoo</string>
+    <string name="app_name">Duzoo</string>
     <string name="action_refresh">Refresh</string>
-    <string name="action_gallery">Gallery</string>
+    <string name="action_invite">INVITE</string>
+    <string name="action_gallery">IMAGE</string>
     <string name="facebook_app_id">1630810627151473</string>
+    <string name="united">Man Utd</string>
 
 </resources>

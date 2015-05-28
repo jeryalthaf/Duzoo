@@ -10,21 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.duzoo.android.R;
 import com.duzoo.android.activity.DuzooActivity;
 import com.duzoo.android.adapter.InterestListAdapter;
 import com.duzoo.android.application.DuzooPreferenceManager;
 import com.duzoo.android.application.UiChangeListener;
-import com.duzoo.android.datasource.DataSource;
-import com.duzoo.android.datasource.Interest;
 import com.duzoo.android.datasource.ParseLink;
 import com.duzoo.android.util.DuzooConstants;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-
-import java.util.List;
 
 public class InterestsFragment extends Fragment {
 

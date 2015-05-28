@@ -1,6 +1,7 @@
 package com.duzoo.android.fragment;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -15,13 +16,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duzoo.android.R;
+import com.duzoo.android.activity.DuzooActivity;
 import com.duzoo.android.adapter.MessageListAdapter;
 import com.duzoo.android.application.DuzooPreferenceManager;
-import com.duzoo.android.datasource.DataSource;
-import com.duzoo.android.datasource.Message;
 import com.duzoo.android.datasource.ParseLink;
 import com.duzoo.android.util.DuzooConstants;
 import com.duzoo.android.util.Util;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -33,9 +38,8 @@ public class MessagesFragment extends Fragment {
     ListView mListView;
     TextView mEmpty;
     EditText messageBox;
-    ImageView mMessageSubmit,mEmoji;
-    DataSource db;
-    MessageListAdapter adapter;
+    ImageView mMessageSubmit, mEmoji;
+    MessageListAdapter mAdapter;
     Handler messageCheckHandler;
 
     public MessagesFragment() {
@@ -48,6 +52,7 @@ public class MessagesFragment extends Fragment {
         mEmpty = (TextView) view.findViewById(R.id.empty);
         setUpList();
         messageBox = (EditText) view.findViewById(R.id.add_message_box);
+        messageBox.setCursorVisible(true);
         mEmoji = (ImageView) view.findViewById(R.id.emoji_add);
         mEmoji.setClickable(true);
         mEmoji.setOnClickListener(new View.OnClickListener() {
@@ -66,17 +71,47 @@ public class MessagesFragment extends Fragment {
                 }
                 String content = new String(messageBox.getText().toString());
                 messageBox.setText("");
-                ParseLink.createMessage(content);
+                createMessage(content);
                 Util.hideKeyBoard(getActivity());
-                adapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                       setUpList();
+                        setUpList();
                     }
-                },500);
+                }, 500);
             }
         });
+    }
+
+    public void createMessage(String content) {
+        if (DuzooActivity.isNetworkAvailable()) {
+            final ProgressDialog dialog = new ProgressDialog(getActivity());
+            dialog.setMessage("Sending your message");
+            dialog.show();
+            final ParseObject message = new ParseObject("Message");
+            message.put(DuzooConstants.PARSE_MESSAGE_CONTENT, content);
+            message.put(DuzooConstants.PARSE_MESSAGE_INTEREST_TYPE,
+                    DuzooPreferenceManager.getIntKey(DuzooConstants.KEY_INTEREST_TYPE));
+            message.put(DuzooConstants.PARSE_MESSAGE_USER_NAME,
+                    DuzooPreferenceManager.getKey(DuzooConstants.KEY_USER_NAME));
+            long timestamp = System.currentTimeMillis();
+            message.put(DuzooConstants.PARSE_MESSAGE_TIMESTAMP, timestamp);
+            message.put(DuzooConstants.PARSE_MESSAGE_FACEBOOK_ID,
+                    DuzooPreferenceManager.getKey(DuzooConstants.KEY_FACEBOOK_ID));
+            message.put(DuzooConstants.PARSE_MESSAGE_SENT_BY_ME, true);
+            message.saveInBackground();
+            message.pinInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e==null)
+                        mAdapter.add(message);
+                    dialog.dismiss();
+                }
+            });
+        }
+        else
+            Toast.makeText(getActivity(),"Sorry , no internet connection available",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -93,7 +128,7 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-//        runMessageCheckEveryTenSeconds();
+        //        runMessageCheckEveryTenSeconds();
     }
 
     @Override
@@ -123,7 +158,7 @@ public class MessagesFragment extends Fragment {
                 try {
                     ParseLink.getMessages();
                     messageCheckHandler.postDelayed(this, 1000 * 10);
-                    adapter.notifyDataSetChanged();
+                    mAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
                 } finally {
                     //also call the same runnable
@@ -139,15 +174,20 @@ public class MessagesFragment extends Fragment {
     }
 
     private void setUpList() {
-        new Handler().post(new Runnable() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Message").orderByAscending(DuzooConstants.PARSE_MESSAGE_TIMESTAMP);
+        query.fromLocalDatastore();
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void run() {
-                db = new DataSource(getActivity());
-                db.open();
-                List<Message> messageList = db.getAllMessages(DuzooPreferenceManager.getIntKey(DuzooConstants.KEY_INTEREST_TYPE));
-                adapter = new MessageListAdapter(getActivity(), messageList);
-                mListView.setAdapter(adapter);
-                mListView.setEmptyView(mEmpty);
+            public void done(List<ParseObject> list, ParseException e) {
+                mAdapter = new MessageListAdapter(list);
+                mListView.setAdapter(mAdapter);
+                int last = mListView.getLastVisiblePosition();
+                if (list.size() != 0) {
+                    if (last == mListView.getCount() - 1 && mListView.getChildAt(last).getBottom() <= mListView.getHeight())
+                        mListView.setStackFromBottom(false);
+                    else
+                        mListView.setStackFromBottom(true);
+                }
             }
         });
     }

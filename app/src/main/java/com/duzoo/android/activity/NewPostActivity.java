@@ -1,12 +1,14 @@
 package com.duzoo.android.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,11 +21,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duzoo.android.R;
+import com.duzoo.android.application.DuzooPreferenceManager;
 import com.duzoo.android.application.MyApplication;
 import com.duzoo.android.application.UIController;
 import com.duzoo.android.datasource.ParseLink;
 import com.duzoo.android.util.DuzooConstants;
 import com.duzoo.android.util.Util;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 /**
  * Created by RRaju on 4/12/2015.
@@ -35,6 +42,7 @@ public class NewPostActivity extends ActionBarActivity {
     ImageView mPostImage;
     boolean imageAttached = false;
     Bitmap bitmap;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +51,13 @@ public class NewPostActivity extends ActionBarActivity {
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar_new_post));
 
+        dialog = new ProgressDialog(this);
+        dialog.setTitle("Please wait");
+        dialog.setMessage("Adding your post ...");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("New Post");
         mPostContent = (EditText) findViewById(R.id.new_post_box);
+        mPostContent.setCursorVisible(true);
         mNewPostAdd = (TextView) findViewById(R.id.new_post_submit);
         mPostImage = (ImageView) findViewById(R.id.image);
         Util.focusKeyBoard(this, mPostContent);
@@ -60,8 +72,7 @@ public class NewPostActivity extends ActionBarActivity {
                 }
                 String content = new String(mPostContent.getText().toString());
                 Util.hideKeyBoard(UIController.newPostActivity);
-                onBackPressed();
-                ParseLink.createPost(content, imageAttached, bitmap);
+                createPost(content, imageAttached, bitmap);
             }
         });
     }
@@ -96,8 +107,7 @@ public class NewPostActivity extends ActionBarActivity {
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryIntent, DuzooConstants.RESULT_LOAD_IMAGE);
             Util.hideKeyBoard(this);
-        }
-        else if(item.getItemId() == android.R.id.home) {
+        } else if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
         return true;
@@ -112,7 +122,7 @@ public class NewPostActivity extends ActionBarActivity {
             case DuzooConstants.RESULT_LOAD_IMAGE:
                 if (resultCode == Activity.RESULT_OK) {
                     Uri selectedImage = data.getData();
-                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                     Cursor cursor = getContentResolver().query(selectedImage,
                             filePathColumn, null, null, null);
@@ -126,8 +136,73 @@ public class NewPostActivity extends ActionBarActivity {
                     bitmap = BitmapFactory.decodeFile(path);
                     imageAttached = true;
                     mPostImage.setImageBitmap(bitmap);
-
                 }
         }
+    }
+
+    public void createPost(String content, boolean imageAttached, Bitmap bitmap) {
+        if (DuzooActivity.isNetworkAvailable()) {
+            if (dialog != null)
+                dialog.show();
+            final ParseObject post = new ParseObject("Post");
+            post.put(DuzooConstants.PARSE_POST_CONTENT, content);
+            post.put(DuzooConstants.PARSE_POST_USER_NAME,
+                    DuzooPreferenceManager.getKey(DuzooConstants.KEY_USER_NAME));
+            post.put(DuzooConstants.PARSE_POST_USER_IMAGE,
+                    DuzooPreferenceManager.getKey(DuzooConstants.KEY_USER_IMAGE));
+            post.put(DuzooConstants.PARSE_POST_UPVOTES, 0);
+            post.put(DuzooConstants.PARSE_POST_DOWNVOTES, 0);
+            post.put(DuzooConstants.PARSE_POST_IS_FLAGGED, false);
+            post.put(DuzooConstants.PARSE_POST_FACEBOOK_ID,
+                    DuzooPreferenceManager.getKey(DuzooConstants.KEY_FACEBOOK_ID));
+            post.put(DuzooConstants.PARSE_POST_INTEREST_TYPE,
+                    DuzooPreferenceManager.getIntKey(DuzooConstants.KEY_INTEREST_TYPE));
+            post.put(DuzooConstants.PARSE_POST_TIMESTAMP, System.currentTimeMillis());
+            post.put(DuzooConstants.PARSE_POST_COMMENT_COUNT, 0);
+            post.put(DuzooConstants.PARSE_POST_HAS_MEDIA, imageAttached);
+            post.put(DuzooConstants.PARSE_POST_FAVORITE, false);
+            post.put(DuzooConstants.PARSE_POST_MY_VOTE, 0);
+            post.put(DuzooConstants.PARSE_POST_DELETED,false);
+            if (imageAttached) {
+                final ParseFile image = new ParseFile("image.jpeg", Util.convertBitmapToBytes(bitmap));
+                image.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            post.put(DuzooConstants.PARSE_POST_IMAGE, image);
+                            post.pinInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (dialog.isShowing())
+                                        dialog.dismiss();
+                                }
+                            });
+                            post.saveInBackground();
+                        }
+                    }
+                });
+            } else {
+                post.pinInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (dialog.isShowing())
+                            dialog.dismiss();
+                        onBackPressed();
+                    }
+                });
+                post.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+
+                    }
+                });
+            }
+        } else
+            Toast.makeText(this, "Sorry, no internet connection available", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //       super.onSaveInstanceState(outState);
     }
 }

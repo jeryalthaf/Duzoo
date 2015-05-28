@@ -4,6 +4,7 @@ package com.duzoo.android.application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 
@@ -93,14 +94,20 @@ public class UIController {
             mFragmentManager.beginTransaction()
                     .replace(R.id.container, signUpFragment).commit();
         } else {
-            switchToInterestFragment();
+            switchToHomeFragment();
         }
     }
 
     public static void switchToHomeFragment() {
-        duzooState = DuzooActivity.state.Home;
-        Intent intent = new Intent(duzooActivity, HomeViewPagerActivity.class);
-        duzooActivity.startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                duzooState = DuzooActivity.state.Home;
+                Intent intent = new Intent(duzooActivity, HomeViewPagerActivity.class);
+                duzooActivity.startActivity(intent);
+            }
+        },4000);
+
     }
 
     public static void switchToInterestFragment() {
@@ -121,6 +128,7 @@ public class UIController {
         duzooState = DuzooActivity.state.NewPost;
         Intent intent = new Intent(homeViewPagerActivity, NewPostActivity.class);
         homeViewPagerActivity.startActivity(intent);
+
     }
 
     public static void finish() {

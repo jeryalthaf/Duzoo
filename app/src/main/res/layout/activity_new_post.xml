@@ -23,7 +23,10 @@
         android:layout_below="@+id/toolbar_new_post"
         android:background="@drawable/border_add_comment"
         android:hint="New post"
-        android:gravity="center"
+        android:textColorHint="@color/light_black"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@null"
+        android:gravity="left|top"
         android:padding="16dp"
         android:textColor="@color/black"
         android:textSize="16sp" />
@@ -47,7 +50,7 @@
         android:layout_centerHorizontal="true"
         android:textSize="24sp"
         android:background="@drawable/rounded_bg_green"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:text="Add" />
 
 </RelativeLayout>

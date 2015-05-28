@@ -2,12 +2,12 @@ package com.duzoo.android.Task;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.duzoo.android.datasource.DataSource;
 import com.duzoo.android.datasource.ParseLink;
 import com.duzoo.android.datasource.User;
+import com.duzoo.android.util.DuzooConstants;
 import com.facebook.AccessToken;
+import com.parse.ParseObject;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -27,9 +27,11 @@ import java.io.InputStreamReader;
 public class GetUserInfo extends AsyncTask<String, Void, String> {
 
     Context mContext;
+    String email;
 
-    public GetUserInfo(Context context) {
+    public GetUserInfo(Context context,String email) {
         mContext = context;
+        this.email = email;
     }
 
     @Override
@@ -72,12 +74,14 @@ public class GetUserInfo extends AsyncTask<String, Void, String> {
             String name = new String(user.getString("name"));
             String id = new String(user.getString("id"));
             String url = new String(user.getJSONObject("picture").getJSONObject("data").getString("url"));
-            DataSource db = new DataSource(mContext);
-            db.open();
-            User _user = db.createUser(name, id, url);
-            db.close();
+            ParseObject _user = new ParseObject("User");
+            _user.put(DuzooConstants.PARSE_USER_NAME,name);
+            _user.put(DuzooConstants.PARSE_USER_FACEBOOK_ID,id);
+            _user.put(DuzooConstants.PARSE_USER_IMAGE,url);
+            _user.put(DuzooConstants.PARSE_USER_EMAIL,email);
+            _user.pinInBackground();
             if (_user != null) {
-                ParseLink.createUserOnParse(name, id, url);
+                ParseLink.createUserOnParse(name, id, url,email);
             }
         } catch (JSONException e) {
             e.printStackTrace();

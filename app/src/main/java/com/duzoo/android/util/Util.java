@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -22,44 +23,40 @@ import java.io.FileOutputStream;
  */
 public class Util {
 
-
-    public static String convertParseFileToString(ParseFile parseFile) {
+    public static Bitmap convertParseFileToBitmap(final ParseFile parseFile) {
+        byte[] data = new byte[0];
         try {
-            byte[] data = parseFile.getData();
-            Bitmap bmp = BitmapFactory.decodeByteArray(data, 0,data.length);
-            String image = convertBitmapToString(bmp);
-            return image;
+            data = parseFile.getData();
         } catch (ParseException e) {
             e.printStackTrace();
-            return null;
         }
+        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+        return bitmap;
     }
 
-    public static Bitmap convertParseFileToBitmap(ParseFile parseFile) {
+    public static Bitmap convertBytesToBitmap(byte[] data) {
         try {
-            byte[] data = parseFile.getData();
             Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
             return bmp;
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static String convertBitmapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,1, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
+    public static byte[] convertBitmapToBytes(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+        byte[] b = baos.toByteArray();
+        return b;
     }
 
-    public static Bitmap convertStringToBitmap(String encodedString){
+    public static Bitmap convertStringToBitmap(String encodedString) {
         try {
-            byte [] encodeByte=Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }
@@ -108,11 +105,11 @@ public class Util {
         return file;
     }
 
-    public static boolean saveImageToAppDirectory(ParseFile file,String fileName) {
+    public static boolean saveImageToAppDirectory(ParseFile file, String fileName) {
         FileOutputStream outputStream;
 
         try {
-            outputStream = MyApplication.getContext().openFileOutput(getAlbumStorageDir()+"/"+fileName, Context.MODE_PRIVATE);
+            outputStream = MyApplication.getContext().openFileOutput(getAlbumStorageDir() + "/" + fileName, Context.MODE_PRIVATE);
             outputStream.write(file.getData());
             outputStream.close();
             return true;

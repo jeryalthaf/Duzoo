@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.duzoo.android.R;
-import com.duzoo.android.datasource.DataSource;
 import com.duzoo.android.datasource.Interest;
 import com.duzoo.android.util.Util;
 
@@ -28,10 +27,7 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
     public SpinnerAdapter(Context ctx, int txtViewResourceId, String[] objects) {
         super(ctx, txtViewResourceId, objects);
         context = ctx;
-        DataSource db = new DataSource(context);
-        db.open();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        interests = db.getAllInterests();
     }
 
     @Override

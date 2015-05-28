@@ -15,7 +15,7 @@
         android:layout_margin="4dp"
         android:layout_alignParentLeft="true"
         android:text="Name"
-        android:background="@drawable/left_border"
+        android:background="@drawable/border_add_comment"
         android:id="@+id/home_message"
         android:textSize="14sp" />
 

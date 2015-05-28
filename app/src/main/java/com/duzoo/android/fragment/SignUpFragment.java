@@ -28,11 +28,12 @@ import com.facebook.login.widget.LoginButton;
 public class SignUpFragment extends Fragment {
 
     UiChangeListener mUIChangeListener;
-    LoginButton      loginButton;
-    CallbackManager  callbackManager;
-    String           accessToken;
-    EditText         code;
-    TextView         submit;
+    LoginButton loginButton;
+    CallbackManager callbackManager;
+    String accessToken, userEmail;
+    EditText email;
+    EditText code;
+    TextView submit;
 
     public static SignUpFragment newInstance() {
         SignUpFragment fragment = new SignUpFragment();
@@ -49,7 +50,7 @@ public class SignUpFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_signup, container, false);
     }
 
@@ -67,33 +68,35 @@ public class SignUpFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         loginButton = (LoginButton) view.findViewById(R.id.login_button);
         code = (EditText) view.findViewById(R.id.invite_code);
+        email = (EditText) view.findViewById(R.id.email);
         submit = (TextView) view.findViewById(R.id.submit_code);
 
+        loginButton.setVisibility(View.GONE);
+
+        submit.setClickable(true);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (code.getText().toString().contentEquals("1404")) {
-                    Toast.makeText(getActivity(),"Validation successful",Toast.LENGTH_SHORT).show();
+                if (!(email.getText().toString().contains("@") && email.getText().toString().contains(".")))
+                    Toast.makeText(getActivity(), "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+                else if (!code.getText().toString().contentEquals("1404"))
+                    Toast.makeText(getActivity(), "Sorry , invalid invite code", Toast.LENGTH_SHORT).show();
+                else {
+                    userEmail = email.getText().toString();
+                    loginButton.setVisibility(View.VISIBLE);
+                    email.setVisibility(View.GONE);
                     code.setVisibility(View.GONE);
                     submit.setVisibility(View.GONE);
-                    code.setEnabled(false);
-                    submit.setEnabled(false);
-                    loginButton.setVisibility(View.VISIBLE);
-                    loginButton.setEnabled(true);
                 }
-                else
-                    Toast.makeText(getActivity(),"Sorry, the code is invalid",Toast.LENGTH_SHORT).show();
 
             }
         });
 
-        loginButton.setVisibility(View.GONE);
-        loginButton.setEnabled(false);
         loginButton.setFragment(SignUpFragment.this);
         callbackManager = CallbackManager.Factory.create();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -122,11 +125,10 @@ public class SignUpFragment extends Fragment {
 
     private void createUserOnParse() {
 
-        GetUserInfo task = new GetUserInfo(getActivity());
+        GetUserInfo task = new GetUserInfo(getActivity(), userEmail);
         task.execute();
 
     }
-
 
 
     @Override

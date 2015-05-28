@@ -19,13 +19,6 @@ import java.util.List;
  */
 public class InterestListAdapter extends BaseAdapter {
     Context      mContext;
-    List<String> names  = Arrays.asList("Chennai Superkings", "Mumbai Indians", "Rajasthan Royals",
-                                "Kolkata Knight Riders",
-                                "Delhi Daredevils", "Sunrisers Hyderabad", "Kings XI Punjab",
-                                "Royal Challengers Bangalore");
-
-    int[]        images = { R.drawable.chen, R.drawable.mi, R.drawable.raj, R.drawable.kkr,
-            R.drawable.dare, R.drawable.sun, R.drawable.kin, R.drawable.rcb };
 
     public InterestListAdapter(Context mContext) {
         this.mContext = mContext;
@@ -33,12 +26,12 @@ public class InterestListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return names.size();
+        return 0;
     }
 
     @Override
     public Object getItem(int position) {
-        return names.get(position);
+        return null;
     }
 
     @Override
@@ -56,8 +49,6 @@ public class InterestListAdapter extends BaseAdapter {
         }
         TextView mName = (TextView) convertView.findViewById(R.id.interest_name);
         ImageView mImage = (ImageView) convertView.findViewById(R.id.interest_image);
-        mImage.setImageResource(images[position]);
-        mName.setText(names.get(position));
         return convertView;
     }
 }

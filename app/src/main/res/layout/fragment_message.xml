@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:background="@color/bg">
 
     <ListView
         android:id="@+id/message_list"
@@ -41,8 +42,10 @@
             android:layout_margin="8dp"
             android:layout_toRightOf="@+id/emoji_add"
             android:background="@color/white"
-            android:hint="Send a message"
-            android:textColorHint="@color/black"
+            android:hint="Type a message"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@null"
+            android:textColorHint="@color/light_black"
             android:textColor="@color/black"
             android:textSize="16sp" />
 

@@ -2,94 +2,134 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="8dp"
-    android:layout_height="wrap_content">
+    android:padding="8dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="40dp"
+    <RelativeLayout
+        android:id="@+id/feed_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/home_post_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="8dp"
+            android:src="@drawable/user" />
+
+        <TextView
+            android:id="@+id/home_post_name"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/home_post_image"
+            android:gravity="left|center_vertical"
+            android:text="Name"
+            android:textColor="@color/light_black"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/home_upvote"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/home_post_image"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/up_active" />
+
+        <ImageView
+            android:id="@+id/home_downvote"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/home_upvote"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:src="@drawable/down_active" />
+
+        <TextView
+            android:id="@+id/home_post_count"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/home_post_name"
+            android:gravity="center"
+            android:text="34"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/home_post_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/home_post_name"
+            android:layout_alignStart="@+id/home_post_name"
+            android:layout_below="@+id/home_post_name"
+            android:autoLink="all"
+            android:gravity="left|top"
+            android:paddingRight="16dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/home_post_media"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_alignLeft="@+id/home_post_name"
+            android:layout_alignStart="@+id/home_post_name"
+            android:layout_below="@+id/home_post_content"
+            android:paddingTop="4dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/feed_footer"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="8dp"
-        android:src="@drawable/user"
-        android:id="@+id/home_post_image" />
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/feed_header">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        android:gravity="left|center_vertical"
-        android:layout_toRightOf="@+id/home_post_image"
-        android:id="@+id/home_post_name"
-        android:textColor="@color/light_black"
-        android:textSize="17sp"
-        android:text="Name" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/home_favorite"
+            android:src="@drawable/star_inactive" />
 
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/up_active"
-        android:layout_marginLeft="8dp"
-        android:layout_below="@+id/home_post_image"
-        android:layout_alignParentLeft="true"
-        android:id="@+id/home_upvote" />
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="8dp"
-        android:gravity="center"
-        android:src="@drawable/down_active"
-        android:layout_below="@+id/home_upvote"
-        android:id="@+id/home_downvote" />
-
-    <TextView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text="34"
-        android:layout_alignTop="@+id/home_post_name"
-        android:gravity="center"
-        android:textSize="17sp"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/black"
-        android:id="@+id/home_post_count" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="left|top"
-        android:id="@+id/home_post_content"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:text="Content si the sasjk ssa dsadas dasdas  dsadas asdas asdas sadas asda sadas dasdas asdsa asdasdas sdads dsaa sdas"
-        android:maxLines="4"
-        android:paddingRight="16dp"
-        android:layout_below="@+id/home_post_name"
-        android:layout_alignLeft="@+id/home_post_name"
-        android:layout_alignStart="@+id/home_post_name" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        android:text="34 comments"
-        android:id="@+id/home_comment_count"
-        android:layout_alignLeft="@+id/home_post_name"
-        android:layout_alignStart="@+id/home_post_name"
-        android:layout_below="@id/home_downvote"/>
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:padding="6dp"
-        android:layout_margin="6dp"
-        android:layout_below="@+id/home_downvote"
-        android:id="@+id/home_share_whatsapp"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/whatsapp"/>
+        <TextView
+            android:id="@+id/home_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/home_favorite"
+            android:paddingLeft="24dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="34 comments"
+            android:textSize="14sp" />
 
 
+        <ImageView
+            android:id="@+id/home_delete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:layout_toRightOf="@+id/home_comment_count"
+            android:src="@drawable/ic_del" />
 
+        <ImageView
+            android:id="@+id/home_share_whatsapp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/whatsapp" />
 
+    </RelativeLayout>
 </RelativeLayout>

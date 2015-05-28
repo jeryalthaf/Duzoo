@@ -5,16 +5,24 @@ package com.duzoo.android.adapter;
  * Created by RRaju on 2/7/2015.
  */
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Handler;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,12 +30,24 @@ import android.widget.Toast;
 
 import com.duzoo.android.R;
 import com.duzoo.android.activity.DuzooActivity;
+import com.duzoo.android.activity.HomeViewPagerActivity;
 import com.duzoo.android.application.DuzooPreferenceManager;
-import com.duzoo.android.datasource.DataSource;
-import com.duzoo.android.datasource.Message;
+import com.duzoo.android.application.MyApplication;
+import com.duzoo.android.application.UIController;
+import com.duzoo.android.datasource.Datasource;
 import com.duzoo.android.datasource.ParseLink;
 import com.duzoo.android.datasource.Post;
+import com.duzoo.android.fragment.FeedFragment;
 import com.duzoo.android.util.DuzooConstants;
+import com.duzoo.android.util.Util;
+import com.parse.GetCallback;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -38,16 +58,17 @@ import java.util.regex.Pattern;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FeedListAdapter extends BaseAdapter {
-    Context mContext;
-    List<Post> posts;
-    LayoutInflater inflater;
-    DataSource db;
-    String link;
 
-    public FeedListAdapter(Context context, List<Post> posts) {
-        mContext = context;
+    Context mContext;
+    List<ParseObject> posts;
+    LayoutInflater inflater;
+    Activity activity;
+
+    public FeedListAdapter(List<ParseObject> posts, Activity parentActivity) {
+        mContext = MyApplication.getContext();
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.posts = posts;
+        activity = parentActivity;
     }
 
     @Override
@@ -66,29 +87,71 @@ public class FeedListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        final Post post = posts.get(position);
-        if (convertView == null) {
-            convertView = new View(mContext);
-            convertView = inflater.inflate(R.layout.row_feed_list_item, null);
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+        final ParseObject post = posts.get(position);
+
+        int vote = 0;
+        boolean fav = false;
+
+        try {
+            vote = post.getInt(DuzooConstants.PARSE_POST_MY_VOTE);
+            fav = post.getBoolean(DuzooConstants.PARSE_POST_FAVORITE);
+        } catch (Exception ex) {
+            vote = 0;
+            fav = false;
         }
+        if (convertView == null)
+            convertView = inflater.inflate(R.layout.row_feed_list_item, null);
+
+
         TextView mName = (TextView) convertView.findViewById(R.id.home_post_name);
         TextView mContent = (TextView) convertView.findViewById(R.id.home_post_content);
-        ImageView uVote = (ImageView) convertView.findViewById(R.id.home_upvote);
-        ImageView dVote = (ImageView) convertView.findViewById(R.id.home_downvote);
         TextView voteStats = (TextView) convertView.findViewById(R.id.home_post_count);
-        CircleImageView mPic = (CircleImageView) convertView.findViewById(R.id.home_post_image);
-        ImageView mWhatsApp = (ImageView) convertView.findViewById(R.id.home_share_whatsapp);
         TextView mCommentCount = (TextView) convertView.findViewById(R.id.home_comment_count);
 
-        int status = post.getVote();
-        if (status == 1) {
+        ImageView mMedia = (ImageView) convertView.findViewById(R.id.home_post_media);
+        ImageView mFav = (ImageView) convertView.findViewById(R.id.home_favorite);
+        ImageView mDel = (ImageView) convertView.findViewById(R.id.home_delete);
+        ImageView mWhatsApp = (ImageView) convertView.findViewById(R.id.home_share_whatsapp);
+        ImageView uVote = (ImageView) convertView.findViewById(R.id.home_upvote);
+        ImageView dVote = (ImageView) convertView.findViewById(R.id.home_downvote);
+
+        CircleImageView mPic = (CircleImageView) convertView.findViewById(R.id.home_post_image);
+
+        mName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tryUserFetch(post);
+            }
+        });
+        if (vote == 1) {
             uVote.setImageResource(R.drawable.up_inactive);
             dVote.setImageResource(R.drawable.down_active);
-        } else if (status == -1) {
+        } else if (vote == -1) {
             dVote.setImageResource(R.drawable.down_inactive);
             uVote.setImageResource(R.drawable.up_active);
+        } else {
+            dVote.setImageResource(R.drawable.down_active);
+            uVote.setImageResource(R.drawable.up_active);
         }
+
+        mDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                askConfirmDialogAndDelete(post);
+            }
+        });
+        if (fav)
+            mFav.setImageResource(R.drawable.star_active);
+        else
+            mFav.setImageResource(R.drawable.star_inactive);
+
+        mFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFav(post);
+            }
+        });
         uVote.setClickable(true);
         uVote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,68 +173,114 @@ public class FeedListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                String text = new String(post.getContent() + " .Get the CricZoo app to get more involved ");
+                String text =
+                        post.getString(DuzooConstants.PARSE_POST_CONTENT) + " via"
+                                + " https://goo.gl/oGcacI";
                 sendIntent.putExtra(Intent.EXTRA_TEXT, text);
                 sendIntent.setType("text/plain");
+                sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 sendIntent.setPackage("com.whatsapp");
                 mContext.startActivity(sendIntent);
             }
         });
-        mName.setText(post.getName());
-        if (post.getCommentCount() > 1)
-            mCommentCount.setText(post.getCommentCount() + " comments");
+        if (post.getBoolean(DuzooConstants.PARSE_POST_HAS_MEDIA)) {
+            mMedia.setVisibility(View.VISIBLE);
+            String imageLink = post.getParseFile(DuzooConstants.PARSE_POST_IMAGE).getUrl();
+            Picasso.with(mContext).load(imageLink).placeholder(R.drawable.ic_launcher).into(mMedia);
+        } else
+            mMedia.setVisibility(View.GONE);
+        mName.setText(post.getString(DuzooConstants.PARSE_POST_USER_NAME));
+        if (post.getInt(DuzooConstants.PARSE_POST_COMMENT_COUNT) > 1)
+            mCommentCount.setText(post.getInt(DuzooConstants.PARSE_POST_COMMENT_COUNT) + " comments");
         else
-            mCommentCount.setText(post.getCommentCount() + " comment");
-        analyseContentAndSetUrl(mContent, post.getContent());
-        int score = post.getUpvotes() - post.getDownvotes();
+            mCommentCount.setText(post.getInt(DuzooConstants.PARSE_POST_COMMENT_COUNT) + " comment");
+        mCommentCount.setClickable(true);
+        mCommentCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DuzooPreferenceManager.putKey(DuzooConstants.KEY_POST_ID, post.getObjectId());
+                UIController.switchToCommentsFragment();
+            }
+        });
+        mContent.setText(post.getString(DuzooConstants.PARSE_POST_CONTENT));
+        int score = post.getInt(DuzooConstants.PARSE_POST_UPVOTES) - post.getInt(DuzooConstants.PARSE_POST_DOWNVOTES);
         voteStats.setText(score + "");
-        Picasso.with(mContext).load(post.getUserImage()).error(R.drawable.user)
+        Picasso.with(mContext).load(post.getString(DuzooConstants.PARSE_POST_USER_IMAGE)).error(R.drawable.user)
                 .into(mPic);
         return convertView;
     }
 
-    private void analyseContentAndSetUrl(TextView mContent, String message) {
+    private void tryUserFetch(ParseObject post) {
 
-        String regex = "\\(?\\b(http://|www[.])[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(message);
-        if (m.find()) {
-            String urlStr = m.group();
-            if (urlStr.startsWith("(") && urlStr.endsWith(")")) {
-                urlStr = urlStr.substring(1, urlStr.length() - 1);
-            }
-            link = new String(urlStr);
-        }
-        if (link != null) {
-            SpannableString ss = new SpannableString(message);
-            ClickableSpan clickableSpan = new ClickableSpan() {
-                @Override
-                public void onClick(View textView) {
-                    Intent openBrowser = new Intent(Intent.ACTION_VIEW);
-                    openBrowser.setData(Uri.parse(link));
-                    mContext.startActivity(openBrowser);
+        ParseQuery query = ParseQuery.getQuery("_User");
+        query.whereEqualTo(DuzooConstants.PARSE_POST_FACEBOOK_ID, post.getString(DuzooConstants.PARSE_POST_FACEBOOK_ID));
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (e == null) {
+                    String name = parseObject.getObjectId();
+          //          Toast.makeText(mContext,name,Toast.LENGTH_SHORT).show();
+                } else {
+                    String message = e.getMessage().toString();
+            //        Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
                 }
-            };
-            int start = message.indexOf(link);
-            if (start == -1) {
-                mContent.setText(message);
-                return;
             }
-            int end = start + link.length();
-            ss.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            mContent.setText(ss);
-//            mContent.setMovementMethod(LinkMovementMethod.getInstance());
-        } else
-            mContent.setText(message);
+        });
     }
 
-    private void checkAndVote(int vote, Post post) {
+    private void askConfirmDialogAndDelete(final ParseObject post) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
+        alertDialogBuilder.setTitle("Confirm");
+        alertDialogBuilder
+                .setMessage("Are you sure you want to delete this post ! This is irreversible")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        post.put(DuzooConstants.PARSE_POST_DELETED, true);
+                        post.pinInBackground();
+                        posts.remove(post);
+                        notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void toggleFav(ParseObject parseObject) {
+
+        boolean fav = parseObject.getBoolean(DuzooConstants.PARSE_POST_FAVORITE);
+        if (!fav) {
+            parseObject.put(DuzooConstants.PARSE_POST_FAVORITE, true);
+            parseObject.pinInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null)
+                        Toast.makeText(mContext, "Post added to favorites", Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+                }
+            });
+        } else {
+            parseObject.put(DuzooConstants.PARSE_POST_FAVORITE, false);
+            parseObject.pinInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null)
+                        Toast.makeText(mContext, "Post removed from favorites", Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
+    private void checkAndVote(final int vote, final ParseObject post) {
         if (DuzooActivity.isNetworkAvailable()) {
-            if (db == null) {
-                db = new DataSource(mContext);
-                db.open();
-            }
-            int status = post.getVote();
+            int status = post.getInt(DuzooConstants.PARSE_POST_MY_VOTE);
             if (status == 1 && vote == 1)
                 Toast.makeText(mContext, "You have already upvoted this post", Toast.LENGTH_SHORT)
                         .show();
@@ -179,29 +288,40 @@ public class FeedListAdapter extends BaseAdapter {
                 Toast.makeText(mContext, "You have already downvoted this post", Toast.LENGTH_SHORT)
                         .show();
             else {
-                db.updatePostStatus(post.getId(), vote);
+                post.put(DuzooConstants.PARSE_POST_MY_VOTE, vote);
                 if (vote == 1)
-                    db.updatePost(post.getId(), post.getUpvotes() + 1, post.getDownvotes(),
-                            post.getCommentCount());
-                else
-                    db.updatePost(post.getId(), post.getUpvotes(), post.getDownvotes() + 1,
-                            post.getCommentCount());
-                ParseLink.updatePostVote(post.getId(), vote, ParseLink.currentActivity.home);
-                notifyDataSetChanged();
+                    post.put(DuzooConstants.PARSE_POST_UPVOTES, post.getInt(DuzooConstants.PARSE_POST_UPVOTES) + 1);
+                else if (vote == -1)
+                    post.put(DuzooConstants.PARSE_POST_DOWNVOTES, post.getInt(DuzooConstants.PARSE_POST_DOWNVOTES) + 1);
+
+                post.pinInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            if (vote == 1)
+                                Toast.makeText(mContext, "Post upvoted", Toast.LENGTH_SHORT)
+                                        .show();
+                            else
+                                Toast.makeText(mContext, "Post downvoted", Toast.LENGTH_SHORT)
+                                        .show();
+                            notifyDataSetChanged();
+                            ParseLink.updatePostVote(post.getObjectId(), vote);
+                        }
+                    }
+                });
+
             }
         } else
             Toast.makeText(mContext, "Sorry, no internet connection available", Toast.LENGTH_SHORT)
                     .show();
-        notifyDataSetChanged();
     }
 
     @Override
     public void notifyDataSetChanged() {
-        posts = db.getAllPosts(DuzooPreferenceManager.getIntKey(DuzooConstants.KEY_INTEREST_TYPE));
         super.notifyDataSetChanged();
     }
 
     public String getId(int position) {
-        return posts.get(position).getId();
+        return posts.get(position).getObjectId();
     }
 }
