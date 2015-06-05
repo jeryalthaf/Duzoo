@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.duzoo.android.R;
 import com.duzoo.android.application.DuzooPreferenceManager;
 import com.duzoo.android.application.MyApplication;
@@ -32,6 +33,13 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /**
  * Created by RRaju on 4/12/2015.
  */
@@ -43,6 +51,9 @@ public class NewPostActivity extends ActionBarActivity {
     boolean imageAttached = false;
     Bitmap bitmap;
     ProgressDialog dialog;
+    String path;
+    boolean gif;
+    ParseFile image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,21 +140,23 @@ public class NewPostActivity extends ActionBarActivity {
                     cursor.moveToFirst();
 
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String path = cursor.getString(columnIndex);
+                    path = cursor.getString(columnIndex);
                     cursor.close();
 
                     mPostImage.setVisibility(View.VISIBLE);
                     bitmap = BitmapFactory.decodeFile(path);
                     imageAttached = true;
-                    mPostImage.setImageBitmap(bitmap);
+                    Glide.with(this).load(path).placeholder(R.drawable.placeholder).into(mPostImage);
                 }
         }
     }
 
     public void createPost(String content, boolean imageAttached, Bitmap bitmap) {
         if (DuzooActivity.isNetworkAvailable()) {
-            if (dialog != null)
+            if (dialog != null) {
                 dialog.show();
+                dialog.setCancelable(false);
+            }
             final ParseObject post = new ParseObject("Post");
             post.put(DuzooConstants.PARSE_POST_CONTENT, content);
             post.put(DuzooConstants.PARSE_POST_USER_NAME,
@@ -162,9 +175,34 @@ public class NewPostActivity extends ActionBarActivity {
             post.put(DuzooConstants.PARSE_POST_HAS_MEDIA, imageAttached);
             post.put(DuzooConstants.PARSE_POST_FAVORITE, false);
             post.put(DuzooConstants.PARSE_POST_MY_VOTE, 0);
-            post.put(DuzooConstants.PARSE_POST_DELETED,false);
+            post.put(DuzooConstants.PARSE_POST_DELETED, false);
             if (imageAttached) {
-                final ParseFile image = new ParseFile("image.jpeg", Util.convertBitmapToBytes(bitmap));
+                String name = path.substring(path.lastIndexOf("/"));
+                if (path.endsWith("gif") || path.endsWith("GIF"))
+                    gif = true;
+                else
+                    gif = false;
+                if (gif) {
+                    File file = new File(path);
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    try {
+                        BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+
+                        int read;
+                        byte[] buff = new byte[1024];
+                        while ((read = in.read(buff)) > 0) {
+                            out.write(buff, 0, read);
+                        }
+                        out.flush();
+                        byte[] bytes = out.toByteArray();
+
+                        image = new ParseFile(name, bytes);
+                    } catch (FileNotFoundException ex) {
+                    } catch (IOException ex) {
+                    }
+
+                } else
+                    image = new ParseFile(name, Util.convertBitmapToBytes(bitmap));
                 image.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -175,9 +213,15 @@ public class NewPostActivity extends ActionBarActivity {
                                 public void done(ParseException e) {
                                     if (dialog.isShowing())
                                         dialog.dismiss();
+                                    returnToHomeActivity();
                                 }
                             });
-                            post.saveInBackground();
+                            post.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    returnToHomeActivity();
+                                }
+                            });
                         }
                     }
                 });
@@ -187,18 +231,23 @@ public class NewPostActivity extends ActionBarActivity {
                     public void done(ParseException e) {
                         if (dialog.isShowing())
                             dialog.dismiss();
-                        onBackPressed();
+                        returnToHomeActivity();
                     }
                 });
                 post.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-
+                        returnToHomeActivity();
                     }
                 });
             }
         } else
             Toast.makeText(this, "Sorry, no internet connection available", Toast.LENGTH_SHORT).show();
+    }
+
+    private void returnToHomeActivity() {
+        Intent intent = new Intent(this, HomeViewPagerActivity.class);
+        startActivity(intent);
     }
 
     @Override

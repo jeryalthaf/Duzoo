@@ -1,6 +1,7 @@
 
 package com.duzoo.android.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.duzoo.android.R;
 import com.duzoo.android.application.MyApplication;
 import com.duzoo.android.datasource.Comment;
 import com.parse.ParseObject;
-import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -27,9 +27,9 @@ public class CommentListAdapter extends BaseAdapter {
     Context  mContext;
     List<ParseObject> comments;
     LayoutInflater mInflater;
-    public CommentListAdapter(List<ParseObject> comments) {
+    public CommentListAdapter(List<ParseObject> comments,Activity parentActivity) {
 
-        mContext = MyApplication.getContext();
+        mContext = parentActivity;
         this.comments = comments;
         mInflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -66,7 +66,7 @@ public class CommentListAdapter extends BaseAdapter {
         mDate.setText(date.toString().substring(0,date.toString().indexOf("GMT")-4));
         mName.setText(comment.getName());
         mView.setText(comment.getContent());
-        Picasso.with(mContext).load(comment.getUser_image_url()).placeholder(R.drawable.user).error(R.drawable.user).into(mPic);
+        Glide.with(mContext).load(comment.getUser_image_url()).placeholder(R.drawable.user).error(R.drawable.user).into(mPic);
         return convertView;
     }
 

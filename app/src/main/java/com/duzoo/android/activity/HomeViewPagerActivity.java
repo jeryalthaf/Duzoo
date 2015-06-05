@@ -1,6 +1,7 @@
 
 package com.duzoo.android.activity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.duzoo.android.R;
 import com.duzoo.android.application.UIController;
@@ -84,7 +86,11 @@ public class HomeViewPagerActivity extends ActionBarActivity implements UiChange
             sendIntent.setType("text/plain");
             sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             sendIntent.setPackage("com.whatsapp");
-            startActivity(sendIntent);
+            try {
+                startActivity(sendIntent);
+            } catch (ActivityNotFoundException ex) {
+                Toast.makeText(this,"Whatsapp not installed",Toast.LENGTH_SHORT).show();
+            }
         }
         return true;
     }

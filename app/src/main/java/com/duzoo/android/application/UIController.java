@@ -106,7 +106,7 @@ public class UIController {
                 Intent intent = new Intent(duzooActivity, HomeViewPagerActivity.class);
                 duzooActivity.startActivity(intent);
             }
-        },4000);
+        }, 4000);
 
     }
 
@@ -133,16 +133,19 @@ public class UIController {
 
     public static void finish() {
 
-        duzooActivity.finish();
-        duzooState = null;
-        uiController = null;
+        try {
+            duzooActivity.finish();
+            duzooState = null;
+            uiController = null;
 
-        commentsActivity = null;
-        signUpFragment = null;
-        splashFragment = null;
+            commentsActivity = null;
+            signUpFragment = null;
+            splashFragment = null;
 
-        mFragmentManager = null;
-        mContext = null;
+            mFragmentManager = null;
+            mContext = null;
+        } catch (NullPointerException ex) {
+        }
 
     }
 }

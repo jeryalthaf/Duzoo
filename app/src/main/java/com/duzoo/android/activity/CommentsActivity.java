@@ -130,7 +130,7 @@ public class CommentsActivity extends ActionBarActivity {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List comments, ParseException e) {
-                commentListAdapter = new CommentListAdapter(comments);
+                commentListAdapter = new CommentListAdapter(comments,CommentsActivity.this);
                 mListView.setAdapter(commentListAdapter);
                 if (comments.size() != 0) {
                     if (fits(mListView))

@@ -7,53 +7,33 @@ package com.duzoo.android.adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Handler;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.duzoo.android.R;
 import com.duzoo.android.activity.DuzooActivity;
-import com.duzoo.android.activity.HomeViewPagerActivity;
 import com.duzoo.android.application.DuzooPreferenceManager;
 import com.duzoo.android.application.MyApplication;
 import com.duzoo.android.application.UIController;
-import com.duzoo.android.datasource.Datasource;
 import com.duzoo.android.datasource.ParseLink;
-import com.duzoo.android.datasource.Post;
-import com.duzoo.android.fragment.FeedFragment;
 import com.duzoo.android.util.DuzooConstants;
-import com.duzoo.android.util.Util;
 import com.parse.GetCallback;
-import com.parse.GetDataCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseImageView;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -63,12 +43,24 @@ public class FeedListAdapter extends BaseAdapter {
     List<ParseObject> posts;
     LayoutInflater inflater;
     Activity activity;
+    boolean favFragment;
 
     public FeedListAdapter(List<ParseObject> posts, Activity parentActivity) {
-        mContext = MyApplication.getContext();
+        mContext = parentActivity;
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.posts = posts;
         activity = parentActivity;
+        initfavFragment();
+    }
+
+    private void initfavFragment() {
+        for (ParseObject post : posts) {
+            if (!post.getBoolean(DuzooConstants.PARSE_POST_FAVORITE)) {
+                favFragment = false;
+                return;
+            }
+        }
+        favFragment = true;
     }
 
     @Override
@@ -180,13 +172,17 @@ public class FeedListAdapter extends BaseAdapter {
                 sendIntent.setType("text/plain");
                 sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 sendIntent.setPackage("com.whatsapp");
-                mContext.startActivity(sendIntent);
+                try {
+                    mContext.startActivity(sendIntent);
+                } catch (ActivityNotFoundException ex) {
+                    Toast.makeText(mContext, "Whatsapp not installed", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         if (post.getBoolean(DuzooConstants.PARSE_POST_HAS_MEDIA)) {
             mMedia.setVisibility(View.VISIBLE);
             String imageLink = post.getParseFile(DuzooConstants.PARSE_POST_IMAGE).getUrl();
-            Picasso.with(mContext).load(imageLink).placeholder(R.drawable.ic_launcher).into(mMedia);
+            Glide.with(mContext).load(imageLink).placeholder(R.drawable.placeholder).into(mMedia);
         } else
             mMedia.setVisibility(View.GONE);
         mName.setText(post.getString(DuzooConstants.PARSE_POST_USER_NAME));
@@ -205,7 +201,7 @@ public class FeedListAdapter extends BaseAdapter {
         mContent.setText(post.getString(DuzooConstants.PARSE_POST_CONTENT));
         int score = post.getInt(DuzooConstants.PARSE_POST_UPVOTES) - post.getInt(DuzooConstants.PARSE_POST_DOWNVOTES);
         voteStats.setText(score + "");
-        Picasso.with(mContext).load(post.getString(DuzooConstants.PARSE_POST_USER_IMAGE)).error(R.drawable.user)
+        Glide.with(mContext).load(post.getString(DuzooConstants.PARSE_POST_USER_IMAGE)).error(R.drawable.user)
                 .into(mPic);
         return convertView;
     }
@@ -219,10 +215,10 @@ public class FeedListAdapter extends BaseAdapter {
             public void done(ParseObject parseObject, ParseException e) {
                 if (e == null) {
                     String name = parseObject.getObjectId();
-          //          Toast.makeText(mContext,name,Toast.LENGTH_SHORT).show();
+                    //          Toast.makeText(mContext,name,Toast.LENGTH_SHORT).show();
                 } else {
                     String message = e.getMessage().toString();
-            //        Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
+                    //        Toast.makeText(mContext,message,Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -252,7 +248,7 @@ public class FeedListAdapter extends BaseAdapter {
         alertDialog.show();
     }
 
-    private void toggleFav(ParseObject parseObject) {
+    private void toggleFav(final ParseObject parseObject) {
 
         boolean fav = parseObject.getBoolean(DuzooConstants.PARSE_POST_FAVORITE);
         if (!fav) {
@@ -272,7 +268,10 @@ public class FeedListAdapter extends BaseAdapter {
                 public void done(ParseException e) {
                     if (e == null)
                         Toast.makeText(mContext, "Post removed from favorites", Toast.LENGTH_SHORT).show();
+                    if(favFragment)
+                        posts.remove(parseObject);
                     notifyDataSetChanged();
+
                 }
             });
         }
@@ -321,7 +320,4 @@ public class FeedListAdapter extends BaseAdapter {
         super.notifyDataSetChanged();
     }
 
-    public String getId(int position) {
-        return posts.get(position).getObjectId();
-    }
 }
